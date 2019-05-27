@@ -1,0 +1,33 @@
+# vim
+*.swp
+*.swo
+
+# IntelliJ
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# Build
+vendor/
+build/
+dist/
+.rakeTasks
+
+# OS
+.DS_Store
+
+# Temporary
+run/pids/
+run/logs/
+*.log
+.tmp
+.rakeTasks
+
+# RSpec
+.rspec_status
+
+# Terraform
+.terraform
+*.tfstate
+*.tfstate.backup
