@@ -1,17 +1,14 @@
-Terraform AWS Elasticache Redis
-===============================
+Terraform AWS Organisation
+==========================
 
-[![CircleCI](https://circleci.com/gh/infrablocks/terraform-aws-elasticache-redis.svg?style=svg)](https://circleci.com/gh/infrablocks/terraform-aws-elasticache-redis)
+[![CircleCI](https://circleci.com/gh/infrablocks/terraform-aws-organisation.svg?style=svg)](https://circleci.com/gh/infrablocks/terraform-aws-elasticache-redis)
 
-A Terraform module for deploying an Elasticache Redis instance / cluster in AWS.
+A Terraform module for creating an AWS Organisation.
 
-The Elasticache Redis deployment requires:
-* An existing VPC
+The Organisation deployment has no requirements.
  
-The Elasticache Redis deployment consists of:
+The Organisation deployment consists of:
 * 
-
-![Diagram of infrastructure managed by this module](https://raw.githubusercontent.com/infrablocks/terraform-aws-elasticache-redis/master/docs/architecture.png)
 
 Usage
 -----
@@ -20,8 +17,8 @@ To use the module, include something like the following in your terraform
 configuration:
 
 ```hcl-terraform
-module "ecs_cluster" {
-  source = "infrablocks/elasticache-redis/aws"
+module "organisation" {
+  source = "infrablocks/organisation/aws"
   version = "0.1.1"
   
   region = "eu-west-2"
@@ -31,11 +28,6 @@ module "ecs_cluster" {
   deployment_identifier = "production"
 }
 ```
-
-As mentioned above, Redis deploys into an existing base network. Whilst these 
-can be created using any mechanism you like, the following modules may be of 
-use: 
-* [AWS Base Networking](https://github.com/tobyclemson/terraform-aws-base-networking)
 
 ### Inputs
 
@@ -56,15 +48,16 @@ Development
 
 ### Machine Requirements
 
-In order for the build to run correctly, a few tools will need to be installed on your
-development machine:
+In order for the build to run correctly, a few tools will need to be installed 
+on your development machine:
 
-* Ruby (2.3.1)
+* Ruby (2.4.7)
 * Bundler
 * git
 * git-crypt
 * gnupg
 * direnv
+* aws-vault
 
 #### Mac OS X Setup
 
@@ -187,7 +180,7 @@ Contributing
 ------------
 
 Bug reports and pull requests are welcome on GitHub at 
-https://github.com/infrablocks/terraform-aws-elasticache-redis. 
+https://github.com/infrablocks/terraform-aws-organisation. 
 This project is intended to be a safe, welcoming space for collaboration, and 
 contributors are expected to adhere to 
 the [Contributor Covenant](http://contributor-covenant.org) code of conduct.

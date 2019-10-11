@@ -1,25 +1,25 @@
 version: 2
 jobs:
   test:
-    working_directory: ~/terraform-aws-elasticache-redis
+    working_directory: ~/terraform-aws-organisation
     docker:
-      - image: ruby:2.3.8
+      - image: ruby:2.4.7
     steps:
       - checkout
       - run: ./scripts/ci/common/install-git-crypt.sh
       - run: ./scripts/ci/steps/test.sh
   prerelease:
-    working_directory: ~/terraform-aws-elasticache-redis
+    working_directory: ~/terraform-aws-organisation
     docker:
-      - image: ruby:2.3.8
+      - image: ruby:2.4.7
     steps:
       - checkout
       - run: ./scripts/ci/common/install-git-crypt.sh
       - run: ./scripts/ci/steps/prerelease.sh
   release:
-    working_directory: ~/terraform-aws-elasticache-redis
+    working_directory: ~/terraform-aws-organisation
     docker:
-      - image: ruby:2.3.8
+      - image: ruby:2.4.7
     steps:
       - checkout
       - run: ./scripts/ci/common/install-git-crypt.sh
