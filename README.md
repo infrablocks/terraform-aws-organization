@@ -88,6 +88,9 @@ brew install git
 brew install git-crypt
 brew install gnupg
 
+# aws-vault
+brew cask install
+
 # direnv
 brew install direnv
 echo "$(direnv hook bash)" >> ~/.bash_profile
@@ -99,35 +102,35 @@ direnv allow <repository-directory>
 
 ### Running the build
 
-To provision module infrastructure, run tests and then destroy that infrastructure,
-execute:
+To provision module infrastructure, run tests and then destroy that 
+infrastructure, execute:
 
 ```bash
-./go
+aws-vault exec <profile> -- ./go
 ```
 
 To provision the module prerequisites:
 
 ```bash
-./go deployment:prerequisites:provision[<deployment_identifier>]
+aws-vault exec <profile> -- ./go deployment:prerequisites:provision[<deployment_identifier>]
 ```
 
 To provision the module contents:
 
 ```bash
-./go deployment:harness:provision[<deployment_identifier>]
+aws-vault exec <profile> -- ./go deployment:harness:provision[<deployment_identifier>]
 ```
 
 To destroy the module contents:
 
 ```bash
-./go deployment:harness:destroy[<deployment_identifier>]
+aws-vault exec <profile> -- ./go deployment:harness:destroy[<deployment_identifier>]
 ```
 
 To destroy the module prerequisites:
 
 ```bash
-./go deployment:prerequisites:destroy[<deployment_identifier>]
+aws-vault exec <profile> -- ./go deployment:prerequisites:destroy[<deployment_identifier>]
 ```
 
 ### Common Tasks
