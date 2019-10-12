@@ -146,7 +146,7 @@ aws-vault exec <profile> -- ./go deployment:prerequisites:destroy[<deployment_id
 To generate an SSH key pair:
 
 ```
-ssh-keygen -t rsa -b 4096 -C integration-test@example.com -N '' -f config/secrets/keys/bastion/ssh
+ssh-keygen -m PEM -t rsa -b 4096 -C integration-test@example.com -N '' -f config/secrets/keys/bastion/ssh
 ```
 
 #### Generating a self-signed certificate
