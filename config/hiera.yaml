@@ -5,7 +5,7 @@
   - "yaml"
 :logger: "noop"
 :yaml:
-  :datadir: "config"
+  :datadir: "%{project_directory}/config"
 :hierarchy:
-  - "vars/%{role}"
+  - "roles/%{role}"
   - "defaults"

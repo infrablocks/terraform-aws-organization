@@ -4,5 +4,4 @@ state_file: "%{hiera('project_directory')}/state/harness.tfstate"
 vars:
   region: "%{hiera('region')}"
 
-  component: "%{hiera('component')}"
-  deployment_identifier: "%{hiera('deployment_identifier')}"
+  feature_set: "%{hiera('feature_set')}"

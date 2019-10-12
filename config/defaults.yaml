@@ -1,7 +1,9 @@
 ---
-region: 'eu-west-2'
+region: 'us-east-1'
 
 component: 'test'
 
 work_directory: 'build'
 configuration_directory: "%{hiera('work_directory')}/%{hiera('source_directory')}"
+
+feature_set: 'ALL'

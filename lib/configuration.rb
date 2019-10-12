@@ -2,6 +2,7 @@ require 'securerandom'
 require 'ostruct'
 require 'confidante'
 
+require_relative 'paths'
 require_relative 'public_address'
 
 class Configuration
@@ -11,17 +12,17 @@ class Configuration
   end
 
   def deployment_identifier
-    deployment_identifier_for(OpenStruct.new)
+    deployment_identifier_for({})
   end
 
-  def deployment_identifier_for(args)
-    args.deployment_identifier ||
+  def deployment_identifier_for(overrides)
+    OpenStruct.new(overrides).deployment_identifier ||
         ENV['DEPLOYMENT_IDENTIFIER'] ||
         @random_deployment_identifier
   end
 
   def project_directory
-    File.expand_path(File.join(File.dirname(__FILE__), ".."))
+    Paths.project_root_directory
   end
 
   def work_directory
@@ -32,9 +33,12 @@ class Configuration
     PublicAddress.as_ip_address
   end
 
-  def for(role, overrides = OpenStruct.new)
+  def for(role, overrides = nil)
     @delegate
-        .for_scope(role: role)
+        .for_scope(
+            role: role,
+            project_directory: project_directory
+        )
         .for_overrides({
             public_address: public_address,
             project_directory: project_directory,

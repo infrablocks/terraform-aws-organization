@@ -1,4 +1,5 @@
 require 'ruby_terraform'
+require 'ostruct'
 
 require_relative '../../lib/configuration'
 
@@ -60,7 +61,7 @@ module TerraformModule
 
     private
 
-    def with_clean_directory(configuration, &block)
+    def with_clean_directory(configuration)
       FileUtils.rm_rf(File.dirname(configuration.configuration_directory))
       FileUtils.mkdir_p(File.dirname(configuration.configuration_directory))
       FileUtils.cp_r(

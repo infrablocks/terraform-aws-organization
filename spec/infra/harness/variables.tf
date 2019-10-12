@@ -1,4 +1,3 @@
 variable "region" {}
 
-variable "component" {}
-variable "deployment_identifier" {}
+variable "feature_set" {}
