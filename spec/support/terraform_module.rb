@@ -14,17 +14,53 @@ module TerraformModule
           state: configuration.for(role).state_file)
     end
 
-    def provision_for(role, vars = nil)
-      provision(OpenStruct.new(
-          configuration.for(role)
-              .to_h.merge(vars: vars || configuration.for(role).vars)))
+    def provision_for(role, overrides = nil)
+      provision(configuration.for(role, overrides))
     end
 
     def provision(configuration)
-      puts
-      puts "Provisioning with deployment identifier: #{configuration.deployment_identifier}"
-      puts
+      with_clean_directory(configuration) do
+        puts
+        puts "Provisioning with deployment identifier: " +
+            configuration.deployment_identifier
+        puts
 
+        RubyTerraform.apply(
+            state: configuration.state_file,
+            directory: '.',
+            vars: configuration.vars.to_h,
+            auto_approve: true)
+
+        puts
+      end
+    end
+
+    def destroy_for(role, overrides = nil)
+      destroy(configuration.for(role, overrides))
+    end
+
+    def destroy(configuration)
+      unless ENV['DEPLOYMENT_IDENTIFIER']
+        with_clean_directory(configuration) do
+          puts
+          puts "Destroying with deployment identifier: " +
+              configuration.deployment_identifier
+          puts
+
+          RubyTerraform.destroy(
+              state: configuration.state_file,
+              directory: '.',
+              vars: configuration.vars.to_h,
+              force: true)
+
+          puts
+        end
+      end
+    end
+
+    private
+
+    def with_clean_directory(configuration, &block)
       FileUtils.rm_rf(File.dirname(configuration.configuration_directory))
       FileUtils.mkdir_p(File.dirname(configuration.configuration_directory))
       FileUtils.cp_r(
@@ -33,44 +69,7 @@ module TerraformModule
 
       Dir.chdir(configuration.configuration_directory) do
         RubyTerraform.init
-        RubyTerraform.apply(
-            state: configuration.state_file,
-            directory: '.',
-            vars: configuration.vars.to_h,
-            auto_approve: true)
-      end
-
-      puts
-    end
-
-    def destroy_for(role, vars = nil)
-      destroy(OpenStruct.new(
-          configuration.for(role)
-              .to_h.merge(vars: vars || configuration.for(role).vars)))
-    end
-
-    def destroy(configuration)
-      unless ENV['DEPLOYMENT_IDENTIFIER']
-        puts
-        puts "Destroying with deployment identifier: #{configuration.deployment_identifier}"
-        puts
-
-        FileUtils.rm_rf(File.dirname(configuration.configuration_directory))
-        FileUtils.mkdir_p(File.dirname(configuration.configuration_directory))
-        FileUtils.cp_r(
-            configuration.source_directory,
-            configuration.configuration_directory)
-
-        Dir.chdir(configuration.configuration_directory) do
-          RubyTerraform.init
-          RubyTerraform.destroy(
-              state: configuration.state_file,
-              directory: '.',
-              vars: configuration.vars.to_h,
-              force: true)
-        end
-
-        puts
+        yield configuration
       end
     end
   end

@@ -12,10 +12,10 @@ shared_context :terraform do
     TerraformModule.output_for(role, name)
   end
 
-  def reprovision(override_vars = {})
+  def reprovision(overrides = {})
     TerraformModule.provision_for(
         :harness,
         TerraformModule.configuration.for(:harness)
-            .vars.to_h.merge(override_vars))
+            .vars.to_h.merge(overrides))
   end
 end
