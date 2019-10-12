@@ -6,8 +6,6 @@ require_relative '../terraform_module'
 shared_context :terraform do
   include Awspec::Helper::Finder
 
-  let(:cloudwatch_logs_client) { Aws::CloudWatchLogs::Client.new }
-
   let(:vars) {TerraformModule.configuration.for(:harness).vars}
 
   def output_for(role, name)
