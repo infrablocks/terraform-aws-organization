@@ -102,6 +102,12 @@ direnv allow <repository-directory>
 
 ### Running the build
 
+Running the build requires an AWS account and AWS credentials. You are free to 
+configure credentials however you like as long as an access key ID and secret
+access key are available. These instructions utilise 
+[aws-vault](https://github.com/99designs/aws-vault) which makes credential
+management easy and secure.
+
 To provision module infrastructure, run tests and then destroy that 
 infrastructure, execute:
 
