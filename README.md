@@ -3,7 +3,7 @@ Terraform AWS Organisation
 
 [![CircleCI](https://circleci.com/gh/infrablocks/terraform-aws-organisation.svg?style=svg)](https://circleci.com/gh/infrablocks/terraform-aws-elasticache-redis)
 
-A Terraform module for creating an AWS Organisation.
+A Terraform module for managing an AWS Organisation.
 
 The Organisation deployment has no requirements.
  

@@ -9,3 +9,4 @@ gem 'rspec', '~> 3.9'
 gem 'awspec', '~> 1.18'
 gem 'git', '~> 1.5'
 gem 'semantic', '~> 1.6'
+gem "rubyzip", ">= 1.3.0"
