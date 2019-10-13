@@ -7,3 +7,5 @@ work_directory: 'build'
 configuration_directory: "%{hiera('work_directory')}/%{hiera('source_directory')}"
 
 feature_set: 'ALL'
+
+nodes: []

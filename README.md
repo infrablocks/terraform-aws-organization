@@ -139,6 +139,23 @@ To destroy the module prerequisites:
 aws-vault exec <profile> -- ./go deployment:prerequisites:destroy[<deployment_identifier>]
 ```
 
+Configuration parameters can be overridden via environment variables:
+
+```bash
+DEPLOYMENT_IDENTIFIER=testing aws-vault exec <profile> -- ./go
+```
+
+When a deployment identifier is provided via an environment variable, 
+infrastructure will not be destroyed at the end of test execution. This can
+be useful during development to avoid lengthy provision and destroy cycles.
+
+By default, providers will be downloaded for each terraform execution. To
+cache providers between calls:
+
+```bash
+TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache" aws-vault exec <profile> -- ./go
+```
+
 ### Common Tasks
 
 #### Generating an SSH key pair

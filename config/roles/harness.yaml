@@ -5,3 +5,5 @@ vars:
   region: "%{hiera('region')}"
 
   feature_set: "%{hiera('feature_set')}"
+
+  nodes: "%{hiera('nodes')}"
