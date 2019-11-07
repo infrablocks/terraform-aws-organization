@@ -6,4 +6,4 @@ vars:
 
   feature_set: "%{hiera('feature_set')}"
 
-  nodes: "%{hiera('nodes')}"
+  organizational_units: "%{hiera('organizational_units')}"

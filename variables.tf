@@ -4,11 +4,13 @@ variable "feature_set" {
   description = "The feature set of the organization. One of 'ALL' or 'CONSOLIDATED_BILLING'."
 }
 
-variable "nodes" {
+variable "organizational_units" {
   type = list(object({
-    type = string,
-    name = string
+    name = string,
+    children = list(object({
+      name = string
+    }))
   }))
   default = []
-  description = "The tree of organisational units to construct. Defaults to an empty tree."
+  description = "The tree of organizational units to construct. Defaults to an empty tree."
 }

@@ -6,10 +6,10 @@ data "terraform_remote_state" "prerequisites" {
   }
 }
 
-module "organisation" {
+module "organization" {
   source = "../../../../"
 
   feature_set = var.feature_set
 
-  nodes = var.nodes
+  organizational_units = var.organizational_units
 }

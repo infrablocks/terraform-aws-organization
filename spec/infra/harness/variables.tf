@@ -2,9 +2,11 @@ variable "region" {}
 
 variable "feature_set" {}
 
-variable "nodes" {
+variable "organizational_units" {
   type = list(object({
-    type = string,
-    name = string
+    name = string,
+    children = list(object({
+      name = string
+    }))
   }))
 }
