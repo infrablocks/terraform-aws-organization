@@ -7,7 +7,7 @@ require_relative 'public_address'
 
 class Configuration
   def initialize
-    @random_deployment_identifier = SecureRandom.hex[0, 8]
+    @random_deployment_identifier = SecureRandom.hex[0, 8].to_s
     @delegate = Confidante.configuration
   end
 

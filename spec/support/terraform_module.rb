@@ -24,7 +24,7 @@ module TerraformModule
       with_clean_directory(configuration) do
         puts
         puts "Provisioning with deployment identifier: " +
-            configuration.deployment_identifier
+            configuration.deployment_identifier.to_s
         puts
 
         RubyTerraform.apply(
@@ -46,7 +46,7 @@ module TerraformModule
         with_clean_directory(configuration) do
           puts
           puts "Destroying with deployment identifier: " +
-              configuration.deployment_identifier
+              configuration.deployment_identifier.to_s
           puts
 
           RubyTerraform.destroy(
