@@ -17,3 +17,14 @@ variable "organizational_units" {
   default = []
   description = "The tree of organizational units to construct. Defaults to an empty tree."
 }
+
+variable "accounts" {
+  type = list(object({
+    name = string,
+    email = string,
+    organizational_unit = string,
+    allow_iam_users_access_to_billing = bool,
+  }))
+  default = []
+  description = "The set of accounts to create. Defaults to an empty list."
+}
