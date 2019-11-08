@@ -12,7 +12,8 @@ module TerraformModule
     def output_for(role, name)
       RubyTerraform.output(
           name: name,
-          state: configuration.for(role).state_file)
+          state: configuration.for(role).state_file,
+          json: true)
     end
 
     def provision_for(role, overrides = nil)

@@ -8,7 +8,10 @@ variable "organizational_units" {
   type = list(object({
     name = string,
     children = list(object({
-      name = string
+      name = string,
+      children = list(object({
+        name = string
+      }))
     }))
   }))
   default = []
