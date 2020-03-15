@@ -89,41 +89,33 @@ end
 
 namespace :deployment do
   namespace :prerequisites do
-    RakeTerraform.define_command_tasks do |t|
-      t.argument_names = [:deployment_identifier]
+    RakeTerraform.define_command_tasks(
+        configuration_name: 'prerequisites',
+        argument_names: [:deployment_identifier]
+    ) do |t, args|
+      deployment_configuration =
+          configuration.for(:prerequisites, args)
 
-      t.configuration_name = 'prerequisites'
-      t.source_directory =
-          configuration.for(:prerequisites).source_directory
-      t.work_directory =
-          configuration.for(:prerequisites).work_directory
+      t.source_directory = deployment_configuration.source_directory
+      t.work_directory = deployment_configuration.work_directory
 
-      t.state_file =
-          configuration.for(:prerequisites).state_file
-
-      t.vars = lambda do |args|
-        configuration.for(:prerequisites, args)
-            .vars
-            .to_h
-      end
+      t.state_file = deployment_configuration.state_file
+      t.vars = deployment_configuration.vars
     end
   end
 
   namespace :harness do
-    RakeTerraform.define_command_tasks do |t|
-      t.argument_names = [:deployment_identifier]
+    RakeTerraform.define_command_tasks(
+        configuration_name: 'harness',
+        argument_names: [:deployment_identifier]
+    ) do |t, args|
+      deployment_configuration = configuration.for(:harness, args)
 
-      t.configuration_name = 'harness'
-      t.source_directory = configuration.for(:harness).source_directory
-      t.work_directory = configuration.for(:harness).work_directory
+      t.source_directory = deployment_configuration.source_directory
+      t.work_directory = deployment_configuration.work_directory
 
-      t.state_file = configuration.for(:harness).state_file
-
-      t.vars = lambda do |args|
-        configuration.for(:harness, args)
-            .vars
-            .to_h
-      end
+      t.state_file = deployment_configuration.state_file
+      t.vars = deployment_configuration.vars
     end
   end
 end
