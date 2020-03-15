@@ -7,14 +7,12 @@ project_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 verbose="no"
 skip_checks="no"
-skip_pre_flight="no"
 offline="no"
 
 missing_dependency="no"
 
 [ -n "$GO_DEBUG" ] && verbose="yes"
 [ -n "$GO_SKIP_CHECKS" ] && skip_checks="yes"
-[ -n "$GO_SKIP_PRE_FLIGHT" ] && skip_pre_flight="yes"
 [ -n "$GO_OFFLINE" ] && offline="yes"
 
 
@@ -34,26 +32,19 @@ if [[ "$skip_checks" = "no" ]]; then
     echo "All system dependencies present. Continuing."
 fi
 
-if [[ "$skip_pre_flight" = "no" ]]; then
-    echo "Installing git hooks."
-    set +e && rm .git/hooks/prepare-commit-msg >/dev/null 2>&1 && set -e
-    cp scripts/git/prepare-commit-msg .git/hooks/
-    chmod +x .git/hooks/prepare-commit-msg
+if [[ "$offline" = "no" ]]; then
+    echo "Installing bundler."
+    if [[ "$verbose" = "yes" ]]; then
+        gem install --no-document bundler
+    else
+        gem install --no-document bundler > /dev/null
+    fi
 
-    if [[ "$offline" = "no" ]]; then
-        echo "Installing bundler."
-        if [[ "$verbose" = "yes" ]]; then
-            gem install --no-document bundler
-        else
-            gem install --no-document bundler > /dev/null
-        fi
-
-        echo "Installing ruby dependencies."
-        if [[ "$verbose" = "yes" ]]; then
-            bundle install
-        else
-            bundle install > /dev/null
-        fi
+    echo "Installing ruby dependencies."
+    if [[ "$verbose" = "yes" ]]; then
+        bundle install
+    else
+        bundle install > /dev/null
     fi
 fi
 
