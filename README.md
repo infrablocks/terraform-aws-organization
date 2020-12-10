@@ -73,17 +73,19 @@ must not include a `children` property.
 
 ### Inputs
 
-| Name                  | Description                                      | Default | Required |
-|-----------------------|--------------------------------------------------|:-------:|:--------:|
-| region                | The region into which to deploy the cache        | -       | yes      |
-| vpc_id                | The ID of the VPC into which to deploy the cache | -       | yes      |
-| component             | The component this cache will contain            | -       | yes      |
-| deployment_identifier | An identifier for this instantiation             | -       | yes      |
+| Name                  | Description                                                                             | Default | Required |
+|-----------------------|-----------------------------------------------------------------------------------------|:-------:|:--------:|
+| feature_set           | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING") | ALL     | yes      |
+| organizational_units  | The tree of organizational units in the organization                                    | -       | yes      |
+| accounts              | The accounts that are part of the organization                                          | -       | yes      |
 
 ### Outputs
 
-| Name | Description |
-|------|-------------|
+| Name                 | Description                                       |
+|----------------------|---------------------------------------------------|
+| organization_arn     | The ARN of the resulting organization             |
+| organizational_units | Details of the resulting organizational units     |
+| accounts             | Details of the resulting accounts                 |
 
 Development
 -----------
@@ -93,7 +95,7 @@ Development
 In order for the build to run correctly, a few tools will need to be installed 
 on your development machine:
 
-* Ruby (2.4.7)
+* Ruby (2.6.0)
 * Bundler
 * git
 * git-crypt
