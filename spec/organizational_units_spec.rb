@@ -15,7 +15,7 @@ describe 'organizational units' do
 
   context "builds organizational units one level deep" do
     before(:all) do
-      reprovision({
+      provision({
           organizational_units: [
               {
                   name: "Fulfillment",
@@ -43,7 +43,7 @@ describe 'organizational units' do
 
   context "build organizational units two levels deep" do
     before(:all) do
-      reprovision({
+      provision({
           organizational_units: [
               {
                   name: "Fulfillment",
@@ -91,7 +91,7 @@ describe 'organizational units' do
 
   context "build organizational units three levels deep" do
     before(:all) do
-      reprovision({
+      provision({
           organizational_units: [
               {
                   name: "Fulfillment",
