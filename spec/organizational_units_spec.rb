@@ -146,9 +146,8 @@ describe 'organizational units' do
     end
 
     it 'outputs details of the created organizational units' do
-      organizational_units_output =
+      organizational_units =
           output_for(:harness, 'organizational_units')
-      organizational_units = JSON.parse(organizational_units_output)
       organizational_unit_names =
           organizational_units.map do |organizational_unit|
             organizational_unit["name"]
