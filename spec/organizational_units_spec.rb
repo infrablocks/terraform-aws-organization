@@ -81,7 +81,7 @@ describe 'organizational units' do
       organizational_units = JSON.parse(organizational_units_output)
       organizational_unit_names =
           organizational_units.map do |organizational_unit|
-            organizational_unit["name"]
+            organizational_unit[:name]
           end
 
       expect(organizational_unit_names)
@@ -150,7 +150,7 @@ describe 'organizational units' do
           output_for(:harness, 'organizational_units')
       organizational_unit_names =
           organizational_units.map do |organizational_unit|
-            organizational_unit["name"]
+            organizational_unit[:name]
           end
 
       expect(organizational_unit_names)
