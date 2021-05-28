@@ -71,6 +71,10 @@ Note: `organizational_units` can be nested up to 3 levels deep. Levels 1 & 2
 must include a `children` property although it can be an empty array. Level 3
 must not include a `children` property.
 
+See the 
+[Terraform registry entry](https://registry.terraform.io/modules/infrablocks/organization/aws/latest) 
+for more details.
+
 ### Inputs
 
 | Name                  | Description                                                                             | Default | Required |
@@ -86,6 +90,11 @@ must not include a `children` property.
 | organization_arn     | The ARN of the resulting organization             |
 | organizational_units | Details of the resulting organizational units     |
 | accounts             | Details of the resulting accounts                 |
+
+### Compatibility
+
+This module is compatible with Terraform versions greater than or equal to 
+Terraform 0.14.
 
 Development
 -----------
