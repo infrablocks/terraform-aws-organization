@@ -77,11 +77,12 @@ for more details.
 
 ### Inputs
 
-| Name                  | Description                                                                             | Default | Required |
-|-----------------------|-----------------------------------------------------------------------------------------|:-------:|:--------:|
-| feature_set           | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING") | ALL     | yes      |
-| organizational_units  | The tree of organizational units in the organization                                    | -       | yes      |
-| accounts              | The accounts that are part of the organization                                          | -       | yes      |
+| Name                          | Description                                                                             | Default | Required |
+|-------------------------------|-----------------------------------------------------------------------------------------|:-------:|:--------:|
+| feature_set                   | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING") | ALL     | yes      |
+| aws_service_access_principals | List of AWS service principal names for which you want to enable integration with your organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. | ALL     | yes      |
+| organizational_units          | The tree of organizational units in the organization                                    | -       | yes      |
+| accounts                      | The accounts that are part of the organization                                          | -       | yes      |
 
 ### Outputs
 
