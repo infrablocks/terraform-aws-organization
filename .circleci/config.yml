@@ -24,7 +24,6 @@ jobs:
       - checkout
       - run: ./scripts/ci/common/install-git-crypt.sh
       - run: ./scripts/ci/steps/release.sh
-
 workflows:
   version: 2
   pipeline:
@@ -32,7 +31,9 @@ workflows:
       - test:
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - /^dependabot.*/
       - prerelease:
           requires:
             - test
