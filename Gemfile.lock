@@ -1139,7 +1139,7 @@ GEM
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
     getsource (0.2.2)
-    git (1.8.1)
+    git (1.10.1)
       rchardet (~> 1.8)
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
@@ -1249,7 +1249,7 @@ PLATFORMS
 DEPENDENCIES
   awspec (~> 1.22)
   confidante (~> 0.27)
-  git (~> 1.7)
+  git (~> 1.10)
   rake (~> 13.0)
   rake_circle_ci (~> 0.9)
   rake_dependencies (~> 2.9)
