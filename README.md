@@ -104,7 +104,7 @@ Development
 In order for the build to run correctly, a few tools will need to be installed 
 on your development machine:
 
-* Ruby (2.6.0)
+* Ruby (2.7.5)
 * Bundler
 * git
 * git-crypt
