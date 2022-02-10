@@ -1231,7 +1231,7 @@ GEM
       lino (>= 1.5)
     ruby_parser (3.16.0)
       sexp_processor (~> 4.15, >= 4.15.1)
-    rubyzip (2.3.0)
+    rubyzip (2.3.2)
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
