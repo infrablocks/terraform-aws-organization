@@ -9,7 +9,7 @@ gem 'rake_ssh', '~> 0.6'
 gem 'rake_gpg', '~> 0.14'
 gem 'confidante', '~> 0.27'
 gem 'rspec', '~> 3.9'
-gem 'awspec', '~> 1.22'
+gem 'awspec', '~> 1.25'
 gem 'git', '~> 1.10'
 gem 'semantic', '~> 1.6'
 gem "rubyzip", ">= 1.3.0"
