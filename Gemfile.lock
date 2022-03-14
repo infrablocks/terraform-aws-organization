@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.2)
+    activesupport (7.0.2.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -1273,7 +1273,7 @@ GEM
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
     hiera (3.7.0)
-    i18n (1.9.1)
+    i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     immutable-struct (2.4.1)
     ipaddress (0.8.3)
@@ -1298,7 +1298,7 @@ GEM
       excon (~> 0.72)
       rake_factory (~> 0.23)
       sshkey (~> 2.0)
-    rake_dependencies (2.11.0)
+    rake_dependencies (2.13.0)
       hamster (~> 3.0)
       minitar (~> 0.9)
       rake_factory (~> 0.23)
@@ -1380,7 +1380,7 @@ DEPENDENCIES
   git (~> 1.10)
   rake (~> 13.0)
   rake_circle_ci (~> 0.9)
-  rake_dependencies (~> 2.9)
+  rake_dependencies (~> 2.13)
   rake_github (~> 0.7)
   rake_gpg (~> 0.14)
   rake_ssh (~> 0.6)

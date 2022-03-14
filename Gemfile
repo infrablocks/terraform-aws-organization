@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake', '~> 13.0'
-gem 'rake_dependencies', '~> 2.9'
+gem 'rake_dependencies', '~> 2.13'
 gem 'rake_terraform', '~> 1.21'
 gem 'rake_circle_ci', '~> 0.9'
 gem 'rake_github', '~> 0.7'
