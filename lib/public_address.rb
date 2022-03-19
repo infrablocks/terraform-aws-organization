@@ -1,8 +1,11 @@
-require 'open-uri'
+require 'net/http'
+require 'uri'
 
 module PublicAddress
   def self.as_ip_address
-    open('http://whatismyip.akamai.com').read
+    uri = URI.parse('http://whatismyip.akamai.com')
+    response = Net::HTTP.get_response(uri)
+    response.body
   end
 
   def self.as_cidr
