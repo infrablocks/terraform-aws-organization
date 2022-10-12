@@ -1,11 +1,11 @@
 ---
 :backends:
-  - "overrides"
   - "env"
+  - "overrides"
   - "yaml"
 :logger: "noop"
 :yaml:
-  :datadir: "%{project_directory}/config"
+  :datadir: "config"
 :hierarchy:
   - "roles/%{role}"
   - "defaults"

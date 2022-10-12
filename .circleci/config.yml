@@ -70,14 +70,24 @@ commands:
       - run: ./scripts/ci/common/configure-git.sh
 
 jobs:
-  test:
+  build:
     <<: *defaults
     steps:
       - checkout
       - configure_tools
       - queue/until_front_of_line:
           consider-branch: false
+      - run: ./scripts/ci/steps/build.sh
+      - notify
+
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - configure_tools
       - run: ./scripts/ci/steps/test.sh
+      - store_artifacts:
+          path: build/logs
       - notify
 
   prerelease:
@@ -108,26 +118,39 @@ workflows:
   version: 2
   pipeline:
     jobs:
-      - test:
-          <<: *slack_context
+      - build:
           <<: *only_main_and_dependabot
-      - merge_pull_request:
           <<: *slack_context
+      - test:
+          <<: *only_main_and_dependabot
+          <<: *slack_context
+          requires:
+            - build
+      - merge_pull_request:
           <<: *only_dependabot
+          <<: *slack_context
           requires:
             - test
       - prerelease:
-          <<: *slack_context
           <<: *only_main
+          <<: *slack_context
           requires:
             - test
+      - slack/on-hold:
+          <<: *only_main
+          <<: *slack_context
+          requires:
+            - prerelease
+          channel: release
+          template: SLACK_ON_HOLD_NOTIFICATION
       - hold:
           <<: *only_main
           type: approval
           requires:
             - prerelease
+            - slack/on-hold
       - release:
-          <<: *slack_context
           <<: *only_main
+          <<: *slack_context
           requires:
             - hold

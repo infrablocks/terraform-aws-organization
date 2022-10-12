@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Paths
-  class <<self
+  class << self
     def project_root_directory
       join_and_expand(self_directory, '..')
     end

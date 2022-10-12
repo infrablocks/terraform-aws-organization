@@ -1,9 +1,0 @@
----
-source_directory: "spec/infra/harness"
-state_file: "%{hiera('project_directory')}/state/harness.tfstate"
-vars:
-  region: "%{hiera('region')}"
-
-  feature_set: "%{hiera('feature_set')}"
-
-  organizational_units: "%{hiera('organizational_units')}"

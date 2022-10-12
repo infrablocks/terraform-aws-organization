@@ -1,12 +1,12 @@
 resource "aws_organizations_account" "account" {
-  count = length(var.accounts)
+  count = length(local.accounts)
 
-  name  = var.accounts[count.index].name
-  email = var.accounts[count.index].email
+  name  = local.accounts[count.index].name
+  email = local.accounts[count.index].email
 
-  iam_user_access_to_billing = var.accounts[count.index].allow_iam_users_access_to_billing ? "ALLOW" : "DENY"
+  iam_user_access_to_billing = local.accounts[count.index].allow_iam_users_access_to_billing ? "ALLOW" : "DENY"
 
-  parent_id = [for ou in local.all_ou_attributes: ou.id if ou.name == var.accounts[count.index].organizational_unit][0]
+  parent_id = [for ou in local.all_ou_attributes: ou.id if ou.name == local.accounts[count.index].organizational_unit][0]
 }
 
 locals {
@@ -18,7 +18,7 @@ locals {
         name  = account.name
         email = account.email
         parent_id = account.parent_id,
-        parent_ou = var.accounts[index(aws_organizations_account.account[*], account)].organizational_unit,
+        parent_ou = local.accounts[index(aws_organizations_account.account[*], account)].organizational_unit,
       }
     ]
 }

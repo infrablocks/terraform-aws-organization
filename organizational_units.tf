@@ -1,18 +1,18 @@
 locals {
   level_1_ou_arguments = [
-    for ou in var.organizational_units : ou
+    for ou in local.organizational_units : ou
   ]
   level_2_ou_arguments = flatten([
-    for level_1_ou in var.organizational_units :
+    for level_1_ou in local.organizational_units :
     [for level_2_ou in level_1_ou.children :
       {
         name: level_2_ou.name,
-        parent: index(var.organizational_units, level_1_ou)
+        parent: index(local.organizational_units, level_1_ou)
       }
     ]
   ])
   level_3_ou_arguments = flatten([
-    for level_1_ou in var.organizational_units :
+    for level_1_ou in local.organizational_units :
     [for level_2_ou in level_1_ou.children :
      [for level_3_ou in level_2_ou.children :
        {

@@ -15,7 +15,7 @@ The Organisation deployment consists of:
 Usage
 -----
 
-To use the module, include something like the following in your terraform
+To use the module, include something like the following in your Terraform
 configuration:
 
 ```hcl-terraform
@@ -94,7 +94,7 @@ for more details.
 ### Compatibility
 
 This module is compatible with Terraform versions greater than or equal to 
-Terraform 0.14.
+Terraform 1.0.
 
 Development
 -----------
@@ -104,7 +104,7 @@ Development
 In order for the build to run correctly, a few tools will need to be installed 
 on your development machine:
 
-* Ruby (2.7.5)
+* Ruby (3.1.1)
 * Bundler
 * git
 * git-crypt
@@ -131,9 +131,9 @@ brew install ruby-build
 echo 'eval "$(rbenv init - bash)"' >> ~/.bash_profile
 echo 'eval "$(rbenv init - zsh)"' >> ~/.zshrc
 eval "$(rbenv init -)"
-rbenv install 2.3.1
+rbenv install 3.1.1
 rbenv rehash
-rbenv local 2.3.1
+rbenv local 3.1.1
 gem install bundler
 
 # git, git-crypt, gnupg
@@ -177,13 +177,13 @@ aws-vault exec <profile> -- ./go deployment:prerequisites:provision[<deployment_
 To provision the module contents:
 
 ```bash
-aws-vault exec <profile> -- ./go deployment:harness:provision[<deployment_identifier>]
+aws-vault exec <profile> -- ./go deployment:root:provision[<deployment_identifier>]
 ```
 
 To destroy the module contents:
 
 ```bash
-aws-vault exec <profile> -- ./go deployment:harness:destroy[<deployment_identifier>]
+aws-vault exec <profile> -- ./go deployment:root:destroy[<deployment_identifier>]
 ```
 
 To destroy the module prerequisites:

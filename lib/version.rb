@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Semantic
   module Extensions
     def release!
-      if pre.nil?
-        raise RuntimeError.new(
-            "Error: no pre segment, this version is not a pre-release version.")
+      unless prerelease?
+        raise 'Error: no pre segment, ' \
+              'this version is not a pre-release version.'
       end
 
       new_version = clone
@@ -12,21 +14,37 @@ module Semantic
     end
 
     def rc!
+      return start_rc if release?
+      return increment_rc if rc?
+
+      raise "Error: pre segment '#{pre}' does not look like 'rc.n'."
+    end
+
+    private
+
+    def start_rc
       new_version = clone
+      new_version = new_version.increment!(:minor)
+      new_version.pre = 'rc.1'
+      new_version
+    end
 
-      if new_version.pre.nil?
-        new_version = new_version.increment!(:minor)
-        new_version.pre = 'rc.1'
-        return new_version
-      end
+    def increment_rc
+      new_version = clone
+      new_version.pre = "rc.#{Integer(new_version.pre.delete('rc.')) + 1}"
+      new_version
+    end
 
-      if new_version.pre =~ /^rc\.\d+$/
-        new_version.pre = "rc.#{Integer(new_version.pre.delete('rc.')) + 1}"
-        return new_version
-      end
+    def release?
+      pre.nil?
+    end
 
-      raise RuntimeError.new(
-          "Error: pre segment '#{new_version.pre}' does not look like 'rc.n'.")
+    def prerelease?
+      !release?
+    end
+
+    def rc?
+      pre =~ /^rc\.\d+$/
     end
   end
 

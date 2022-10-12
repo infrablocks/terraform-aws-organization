@@ -7,10 +7,9 @@ data "terraform_remote_state" "prerequisites" {
 }
 
 module "organization" {
-  # This makes absolutely no sense. I think there's a bug in terraform.
-  source = "./../../../../../../../"
+  source = "../../../.."
 
   feature_set = var.feature_set
-
   organizational_units = var.organizational_units
+  accounts = var.accounts
 }

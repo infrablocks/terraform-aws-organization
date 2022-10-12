@@ -5,8 +5,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    ignore:
-      - dependency-name: "hashicorp/aws"
 
   - package-ecosystem: "bundler"
     directory: "/"
