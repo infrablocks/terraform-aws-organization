@@ -6,8 +6,9 @@ Terraform AWS Organisation
 A Terraform module for managing an AWS Organisation.
 
 The Organisation deployment has no requirements.
- 
+
 The Organisation deployment consists of:
+
 * an AWS organisation
 * with a hierarchy of organisational units
 * with a set of accounts placed in that hierarchy
@@ -20,17 +21,21 @@ configuration:
 
 ```hcl-terraform
 module "organisation" {
-  source = "infrablocks/organisation/aws"
+  source  = "infrablocks/organisation/aws"
   version = "0.1.1"
 
-  feature_set = "ALL"
+  feature_set                   = "ALL"
+  aws_service_access_principals = [
+    "cloudtrail.amazonaws.com",
+    "config.amazonaws.com"
+  ]
 
   organizational_units = [
     {
-      name = "Root",
+      name     = "Root",
       children = [
         {
-          name = "Parent",
+          name     = "Parent",
           children = [
             {
               name = "Dev",
@@ -46,42 +51,43 @@ module "organisation" {
 
   accounts = [
     {
-      name = "Dev Gold"
-      email = "me+dev.gold@example.com"
-      organizational_unit = "Dev"
+      name                              = "Dev Gold"
+      email                             = "me+dev.gold@example.com"
+      organizational_unit               = "Dev"
       allow_iam_users_access_to_billing = true
     },
     {
-      name = "Dev Silver"
-      email = "me+dev.silver@example.com"
-      organizational_unit = "Dev"
+      name                              = "Dev Silver"
+      email                             = "me+dev.silver@example.com"
+      organizational_unit               = "Dev"
       allow_iam_users_access_to_billing = true
     },
     {
-      name = "Prod Platinum"
-      email = "me+prod.platinum@example.com"
-      organizational_unit = "Prod"
+      name                              = "Prod Platinum"
+      email                             = "me+prod.platinum@example.com"
+      organizational_unit               = "Prod"
       allow_iam_users_access_to_billing = true
     }
   ]
 }
 ```
 
-Note: `organizational_units` can be nested up to 3 levels deep. Levels 1 & 2 
-must include a `children` property although it can be an empty array. Level 3
+Note: `organizational_units` can be nested up to 3 levels deep. Levels 1 & 2
+must include a `children` property, although it can be an empty array. Level 3
 must not include a `children` property.
 
-See the 
-[Terraform registry entry](https://registry.terraform.io/modules/infrablocks/organization/aws/latest) 
+See the
+[Terraform registry entry](https://registry.terraform.io/modules/infrablocks/organization/aws/latest)
 for more details.
 
 ### Inputs
 
-| Name                  | Description                                                                             | Default | Required |
-|-----------------------|-----------------------------------------------------------------------------------------|:-------:|:--------:|
-| feature_set           | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING") | ALL     | yes      |
-| organizational_units  | The tree of organizational units in the organization                                    | -       | yes      |
-| accounts              | The accounts that are part of the organization                                          | -       | yes      |
+| Name                          | Description                                                                                            | Default | Required |
+|-------------------------------|--------------------------------------------------------------------------------------------------------|:-------:|:--------:|
+| feature_set                   | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING")                |   ALL   |   yes    |
+| aws_service_access_principals | A list of AWS service principal names for which you want to enable integration with your organization. |   []    |   yes    |
+| organizational_units          | The tree of organizational units in the organization                                                   |    -    |   yes    |
+| accounts                      | The accounts that are part of the organization                                                         |    -    |   yes    |
 
 ### Outputs
 
@@ -93,7 +99,7 @@ for more details.
 
 ### Compatibility
 
-This module is compatible with Terraform versions greater than or equal to 
+This module is compatible with Terraform versions greater than or equal to
 Terraform 1.0.
 
 Development
@@ -101,7 +107,7 @@ Development
 
 ### Machine Requirements
 
-In order for the build to run correctly, a few tools will need to be installed 
+In order for the build to run correctly, a few tools will need to be installed
 on your development machine:
 
 * Ruby (3.1.1)
@@ -155,13 +161,13 @@ direnv allow <repository-directory>
 
 ### Running the build
 
-Running the build requires an AWS account and AWS credentials. You are free to 
+Running the build requires an AWS account and AWS credentials. You are free to
 configure credentials however you like as long as an access key ID and secret
-access key are available. These instructions utilise 
+access key are available. These instructions utilise
 [aws-vault](https://github.com/99designs/aws-vault) which makes credential
 management easy and secure.
 
-To provision module infrastructure, run tests and then destroy that 
+To provision module infrastructure, run tests and then destroy that
 infrastructure, execute:
 
 ```bash
@@ -198,7 +204,7 @@ Configuration parameters can be overridden via environment variables:
 DEPLOYMENT_IDENTIFIER=testing aws-vault exec <profile> -- ./go
 ```
 
-When a deployment identifier is provided via an environment variable, 
+When a deployment identifier is provided via an environment variable,
 infrastructure will not be destroyed at the end of test execution. This can
 be useful during development to avoid lengthy provision and destroy cycles.
 
@@ -222,6 +228,7 @@ ssh-keygen -m PEM -t rsa -b 4096 -C integration-test@example.com -N '' -f config
 #### Generating a self-signed certificate
 
 To generate a self signed certificate:
+
 ```
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 ```
@@ -258,14 +265,14 @@ openssl aes-256-cbc \
 Contributing
 ------------
 
-Bug reports and pull requests are welcome on GitHub at 
-https://github.com/infrablocks/terraform-aws-organisation. 
-This project is intended to be a safe, welcoming space for collaboration, and 
-contributors are expected to adhere to 
+Bug reports and pull requests are welcome on GitHub at
+https://github.com/infrablocks/terraform-aws-organisation.
+This project is intended to be a safe, welcoming space for collaboration, and
+contributors are expected to adhere to
 the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 License
 -------
 
-The library is available as open source under the terms of the 
+The library is available as open source under the terms of the
 [MIT License](http://opensource.org/licenses/MIT).
