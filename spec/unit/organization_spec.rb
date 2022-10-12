@@ -18,9 +18,49 @@ describe 'organization' do
               .with_attribute_value(:feature_set, 'ALL'))
     end
 
+    it 'has no AWS service access principals' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_organizations_organization')
+              .with_attribute_value(:aws_service_access_principals, nil))
+    end
+
     it 'outputs the organization ARN' do
       expect(@plan)
         .to(include_output_creation(name: 'organization_arn'))
+    end
+  end
+
+  context 'when AWS service access principals are provided' do
+    before(:context) do
+      @aws_service_access_principals = %w[
+        cloudtrail.amazonaws.com
+        config.amazonaws.com
+      ]
+
+      @plan = plan(role: :root) do |vars|
+        vars.aws_service_access_principals = @aws_service_access_principals
+      end
+    end
+
+    it 'has the provided AWS service access principals' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_organizations_organization')
+              .with_attribute_value(:aws_service_access_principals,
+                                    @aws_service_access_principals))
+    end
+  end
+
+  context 'when AWS service access principals is an empty list' do
+    before(:context) do
+      @plan = plan(role: :root) do |vars|
+        vars.aws_service_access_principals = []
+      end
+    end
+
+    it 'has no AWS service access principals' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_organizations_organization')
+              .with_attribute_value(:aws_service_access_principals, nil))
     end
   end
 
