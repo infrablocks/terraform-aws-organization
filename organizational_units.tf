@@ -25,29 +25,29 @@ locals {
 }
 
 resource "aws_organizations_organizational_unit" "level_1_ous" {
-  count = length(local.level_1_ou_arguments)
-  name = local.level_1_ou_arguments[count.index].name
+  for_each = { for record in local.level_1_ou_arguments : record.name => record  }
+  name = each.value.name
   parent_id = aws_organizations_organization.organization.roots[0].id
 }
 
 resource "aws_organizations_organizational_unit"  "level_2_ous" {
-  count = length(local.level_2_ou_arguments)
-  name = local.level_2_ou_arguments[count.index].name
-  parent_id = aws_organizations_organizational_unit.level_1_ous[local.level_2_ou_arguments[count.index].parent].id
+  for_each = { for record in local.level_2_ou_arguments : record.name => record  }
+  name = each.value.name
+  parent_id = aws_organizations_organizational_unit.level_1_ous[local.level_1_ou_arguments[each.value.parent].name].id
 }
 
 resource "aws_organizations_organizational_unit"  "level_3_ous" {
-  count = length(local.level_3_ou_arguments)
-  name = local.level_3_ou_arguments[count.index].name
-  parent_id = aws_organizations_organizational_unit.level_2_ous[local.level_3_ou_arguments[count.index].parent].id
+  for_each = { for record in local.level_3_ou_arguments : record.name => record  }
+  name = each.value.name
+  parent_id = aws_organizations_organizational_unit.level_2_ous[local.level_2_ou_arguments[each.value.parent].name].id
 }
 
 locals {
   level_1_ou_attributes = [
     for ou in local.level_1_ou_arguments :
       {
-        id = aws_organizations_organizational_unit.level_1_ous[index(local.level_1_ou_arguments, ou)].id,
-        arn = aws_organizations_organizational_unit.level_1_ous[index(local.level_1_ou_arguments, ou)].arn,
+        id = aws_organizations_organizational_unit.level_1_ous[ou.name].id,
+        arn = aws_organizations_organizational_unit.level_1_ous[ou.name].arn,
         parent_id = aws_organizations_organization.organization.roots[0].id,
         name = ou.name,
       }
@@ -55,18 +55,18 @@ locals {
   level_2_ou_attributes = [
     for ou in local.level_2_ou_arguments :
       {
-        id = aws_organizations_organizational_unit.level_2_ous[index(local.level_2_ou_arguments, ou)].id,
-        arn = aws_organizations_organizational_unit.level_2_ous[index(local.level_2_ou_arguments, ou)].arn,
-        parent_id = aws_organizations_organizational_unit.level_1_ous[ou.parent].id,
+        id = aws_organizations_organizational_unit.level_2_ous[ou.name].id,
+        arn = aws_organizations_organizational_unit.level_2_ous[ou.name].arn,
+        parent_id = aws_organizations_organizational_unit.level_1_ous[local.level_1_ou_arguments[ou.parent].name].id,
         name = ou.name
       }
   ]
   level_3_ou_attributes = [
     for ou in local.level_3_ou_arguments :
       {
-        id = aws_organizations_organizational_unit.level_3_ous[index(local.level_3_ou_arguments, ou)].id,
-        arn = aws_organizations_organizational_unit.level_3_ous[index(local.level_3_ou_arguments, ou)].arn,
-        parent_id = aws_organizations_organizational_unit.level_2_ous[ou.parent].id,
+        id = aws_organizations_organizational_unit.level_3_ous[ou.name].id,
+        arn = aws_organizations_organizational_unit.level_3_ous[ou.name].arn,
+        parent_id = aws_organizations_organizational_unit.level_2_ous[local.level_2_ou_arguments[ou.parent].name].id,
         name = ou.name
       }
   ]

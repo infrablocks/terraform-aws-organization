@@ -1,24 +1,27 @@
 resource "aws_organizations_account" "account" {
-  count = length(local.accounts)
+  for_each = { for record in local.accounts : record.name => record  }
 
-  name  = local.accounts[count.index].name
-  email = local.accounts[count.index].email
+  name  = each.value.name
+  email = each.value.email
 
-  iam_user_access_to_billing = local.accounts[count.index].allow_iam_users_access_to_billing ? "ALLOW" : "DENY"
+  #  iam_user_access_to_billing = local.accounts[count.index].allow_iam_users_access_to_billing ? "ALLOW" : "DENY"
 
-  parent_id = [for ou in local.all_ou_attributes: ou.id if ou.name == local.accounts[count.index].organizational_unit][0]
+  parent_id = (each.value.organizational_unit == "root") ? aws_organizations_organization.organization.roots[0].id : [for ou in local.all_ou_attributes: ou.id if ou.name == each.value.organizational_unit][0]
+
+  tags = each.value.tags
+  tags_all = each.value.tags_all
 }
 
 locals {
   all_account_attributes = [
-    for account in aws_organizations_account.account[*] :
+    for account in values(aws_organizations_account.account)[*] :
       {
         id = account.id,
         arn = account.arn,
         name  = account.name
         email = account.email
         parent_id = account.parent_id,
-        parent_ou = local.accounts[index(aws_organizations_account.account[*], account)].organizational_unit,
+        parent_ou = local.accounts[index(values(aws_organizations_account.account)[*], account)].organizational_unit,
       }
     ]
 }
