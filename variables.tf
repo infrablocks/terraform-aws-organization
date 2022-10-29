@@ -1,3 +1,9 @@
+variable "enabled_policy_types" {
+  type = list(string)
+  default = []
+  description = "Enabled Policy types"
+}
+
 variable "feature_set" {
   type = string
   default = "ALL"
@@ -29,7 +35,9 @@ variable "accounts" {
     name = string,
     email = string,
     organizational_unit = string,
-    allow_iam_users_access_to_billing = bool,
+    tags = map(string),
+    tags_all = map(string),
+    # allow_iam_users_access_to_billing = bool,
   }))
   default = []
   description = "The set of accounts to create. Defaults to an empty list."
