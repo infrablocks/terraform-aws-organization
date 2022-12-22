@@ -1307,10 +1307,11 @@ GEM
       thor
     colored2 (3.1.2)
     concurrent-ruby (1.1.10)
-    confidante (0.27.0)
+    confidante (0.28.0)
       activesupport (>= 4)
-      hiera (~> 3.3, >= 3.3.1)
+      hiera (~> 3.3)
       shikashi (~> 0.6)
+      vault (~> 0.17)
     diff-lcs (1.5.0)
     dry-inflector (0.3.0)
     evalhook (0.6.0)
@@ -1327,7 +1328,7 @@ GEM
       rchardet (~> 1.8)
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
-    hiera (3.10.0)
+    hiera (3.11.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     immutable-struct (2.4.1)
@@ -1438,7 +1439,7 @@ GEM
       sexp_processor (~> 4.6)
     ruby_gpg2 (0.8.0)
       lino (>= 1.5)
-    ruby_parser (3.19.1)
+    ruby_parser (3.19.2)
       sexp_processor (~> 4.16)
     rubyzip (2.3.2)
     sawyer (0.9.2)
@@ -1459,6 +1460,8 @@ GEM
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)
+    vault (0.17.0)
+      aws-sigv4
 
 PLATFORMS
   ruby
