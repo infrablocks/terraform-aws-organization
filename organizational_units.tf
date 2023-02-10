@@ -1,18 +1,18 @@
 locals {
   level_1_ou_arguments = [
-    for ou in var.organizational_units : ou
+    for ou in local.organizational_units : ou
   ]
   level_2_ou_arguments = flatten([
-    for level_1_ou in var.organizational_units :
+    for level_1_ou in local.organizational_units :
     [for level_2_ou in level_1_ou.children :
       {
         name : level_2_ou.name,
-        parent : index(var.organizational_units, level_1_ou)
+        parent : index(local.organizational_units, level_1_ou)
       }
     ]
   ])
   level_3_ou_arguments = flatten([
-    for level_1_ou in var.organizational_units :
+    for level_1_ou in local.organizational_units :
     [for level_2_ou in level_1_ou.children :
       [for level_3_ou in level_2_ou.children :
         {
@@ -23,7 +23,7 @@ locals {
     ]
   ])
   level_4_ou_arguments = flatten([
-    for level_1_ou in var.organizational_units :
+    for level_1_ou in local.organizational_units :
     [for level_2_ou in level_1_ou.children :
       [for level_3_ou in level_2_ou.children :
         [for level_4_ou in level_3_ou.children :
@@ -36,7 +36,7 @@ locals {
     ]
   ])
   level_5_ou_arguments = flatten([
-    for level_1_ou in var.organizational_units :
+    for level_1_ou in local.organizational_units :
     [for level_2_ou in level_1_ou.children :
       [for level_3_ou in level_2_ou.children :
         [for level_4_ou in level_3_ou.children :
@@ -55,7 +55,7 @@ locals {
 resource "aws_organizations_organizational_unit" "level_1_ous" {
   count     = length(local.level_1_ou_arguments)
   name      = local.level_1_ou_arguments[count.index].name
-  parent_id = var.root_id
+  parent_id = aws_organizations_organization.organization.roots[0].id
 }
 
 resource "aws_organizations_organizational_unit" "level_2_ous" {
@@ -88,7 +88,7 @@ locals {
     {
       id        = aws_organizations_organizational_unit.level_1_ous[index(local.level_1_ou_arguments, ou)].id,
       arn       = aws_organizations_organizational_unit.level_1_ous[index(local.level_1_ou_arguments, ou)].arn,
-      parent_id = var.root_id,
+      parent_id = aws_organizations_organization.organization.roots[0].id,
       name      = ou.name,
     }
   ]
