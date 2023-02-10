@@ -16,7 +16,13 @@ variable "organizational_units" {
     children = list(object({
       name = string,
       children = list(object({
-        name = string
+        name = string,
+        children = list(object({
+          name = string,
+          children = list(object({
+            name = string,
+          }))
+        }))
       }))
     }))
   }))
