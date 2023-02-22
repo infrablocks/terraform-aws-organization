@@ -97,7 +97,7 @@ describe 'basic' do
 
       expect(child_organizational_units.size).to(eq(2))
       expect(child_organizational_units.map(&:name).to_set)
-        .to(eq(child_definitions.map { |d| d[:name] }.to_set))
+        .to(eq(child_definitions.to_set { |d| d[:name] }))
     end
     # rubocop:enable RSpec/MultipleExpectations
 
