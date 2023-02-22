@@ -35,9 +35,7 @@ variable "accounts" {
     name = string,
     email = string,
     organizational_unit = string,
-    tags = map(string),
-    tags_all = map(string),
-    # allow_iam_users_access_to_billing = bool,
+    allow_iam_users_access_to_billing = bool,
   }))
   default = []
   description = "The set of accounts to create. Defaults to an empty list."

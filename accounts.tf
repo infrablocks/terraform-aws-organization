@@ -4,12 +4,9 @@ resource "aws_organizations_account" "account" {
   name  = each.value.name
   email = each.value.email
 
-  #  iam_user_access_to_billing = local.accounts[count.index].allow_iam_users_access_to_billing ? "ALLOW" : "DENY"
+  iam_user_access_to_billing = each.value.allow_iam_users_access_to_billing ? "ALLOW" : "DENY"
 
   parent_id = (each.value.organizational_unit == "root") ? aws_organizations_organization.organization.roots[0].id : [for ou in local.all_ou_attributes: ou.id if ou.name == each.value.organizational_unit][0]
-
-  tags = each.value.tags
-  tags_all = each.value.tags_all
 }
 
 locals {
