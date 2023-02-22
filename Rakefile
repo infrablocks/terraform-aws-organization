@@ -3,6 +3,8 @@
 require 'confidante'
 require 'git'
 require 'rake_circle_ci'
+require 'rake_git'
+require 'rake_git_crypt'
 require 'rake_github'
 require 'rake_gpg'
 require 'rake_ssh'
@@ -39,9 +41,32 @@ RakeTerraform.define_installation_tasks(
   version: '1.3.1'
 )
 
+RakeGitCrypt.define_standard_tasks(
+  namespace: :git_crypt,
+
+  provision_secrets_task_name: :'secrets:provision',
+  destroy_secrets_task_name: :'secrets:destroy',
+
+  install_commit_task_name: :'git:commit',
+  uninstall_commit_task_name: :'git:commit',
+
+  gpg_user_key_paths: %w[
+    config/gpg
+    config/secrets/ci/gpg.public
+  ]
+)
+
+namespace :git do
+  RakeGit.define_commit_task(
+    argument_names: [:message]
+  ) do |t, args|
+    t.message = args.message
+  end
+end
+
 namespace :encryption do
   namespace :directory do
-    desc 'Ensure CI secrets directory exists'
+    desc 'Ensure CI secrets directory exists.'
     task :ensure do
       FileUtils.mkdir_p('config/secrets/ci')
     end
@@ -92,13 +117,24 @@ namespace :secrets do
     end
   end
 
-  desc 'Regenerate all secrets'
-  task regenerate: %w[
+  desc 'Generate all generatable secrets.'
+  task generate: %w[
     directory:ensure
     encryption:passphrase:generate
     keys:deploy:generate
     keys:secrets:generate
   ]
+
+  desc 'Provision all secrets.'
+  task provision: [:generate]
+
+  desc 'Delete all secrets.'
+  task :destroy do
+    rm_rf 'config/secrets'
+  end
+
+  desc 'Rotate all secrets.'
+  task rotate: [:'git_crypt:reinstall']
 end
 
 RakeCircleCI.define_project_tasks(
