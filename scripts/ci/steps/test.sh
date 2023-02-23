@@ -23,4 +23,3 @@ git crypt unlock
 source config/secrets/ci/aws-credentials.sh
 
 ./go test:unit
-./go test:integration

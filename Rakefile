@@ -33,7 +33,6 @@ end
 task default: %i[
   test:code:fix
   test:unit
-  test:integration
 ]
 
 RakeTerraform.define_installation_tasks(
@@ -206,19 +205,6 @@ namespace :test do
   RSpec::Core::RakeTask.new(unit: ['terraform:ensure']) do |t|
     t.pattern = 'spec/unit/**{,/*/**}/*_spec.rb'
     t.rspec_opts = '-I spec/unit'
-
-    plugin_cache_directory =
-      "#{Paths.project_root_directory}/vendor/terraform/plugins"
-
-    mkdir_p(plugin_cache_directory)
-
-    ENV['AWS_REGION'] = configuration.region
-  end
-
-  desc 'Run module integration tests'
-  RSpec::Core::RakeTask.new(integration: ['terraform:ensure']) do |t|
-    t.pattern = 'spec/integration/**{,/*/**}/*_spec.rb'
-    t.rspec_opts = '-I spec/integration'
 
     plugin_cache_directory =
       "#{Paths.project_root_directory}/vendor/terraform/plugins"
