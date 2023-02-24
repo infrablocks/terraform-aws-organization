@@ -11,8 +11,7 @@ variable "aws_service_access_principals" {
 }
 
 variable "organization" {
-  type = list(object({
-    name = string,
+  type = object({
     accounts = optional(list(object({
       name = string,
       email = string,
@@ -26,14 +25,38 @@ variable "organization" {
         allow_iam_users_access_to_billing = bool,
       })), [])
       units = optional(list(object({
-        name = string
+        name = string,
         accounts = optional(list(object({
           name = string,
           email = string,
           allow_iam_users_access_to_billing = bool,
         })), [])
+        units = optional(list(object({
+          name = string
+          accounts = optional(list(object({
+            name = string,
+            email = string,
+            allow_iam_users_access_to_billing = bool,
+          })), [])
+          units = optional(list(object({
+            name = string
+            accounts = optional(list(object({
+              name = string,
+              email = string,
+              allow_iam_users_access_to_billing = bool,
+            })), [])
+            units = optional(list(object({
+              name = string
+              accounts = optional(list(object({
+                name = string,
+                email = string,
+                allow_iam_users_access_to_billing = bool,
+              })), [])
+            })), [])
+          })), [])
+        })), [])
       })), [])
     })), [])
-  }))
+  })
   default = null
 }

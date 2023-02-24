@@ -25,7 +25,7 @@ describe 'accounts' do
   context 'when no accounts specified' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
-        vars.organization = []
+        vars.organization = {}
       end
     end
 
@@ -43,7 +43,45 @@ describe 'accounts' do
     end
   end
 
-  context 'when one account specified' do
+  context 'when one account specified within root organizational unit' do
+    before(:context) do
+      @account_name = 'Finance'
+      @account_email = 'finance@example.com'
+
+      @plan = plan(role: :root) do |vars|
+        vars.organization = {
+          accounts: [
+            account(name: @account_name,
+                    email: @account_email)
+          ]
+        }
+      end
+    end
+
+    it 'outputs details of the account' do
+      expect(@plan)
+        .to(include_output_creation(name: 'accounts'))
+    end
+
+    it 'creates the account' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_account'
+        )
+              .with_attribute_value(:name, @account_name))
+    end
+
+    it 'uses the supplied email address' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_account'
+        )
+              .with_attribute_value(:name, @account_name)
+              .with_attribute_value(:email, @account_email))
+    end
+  end
+
+  context 'when one account specified within layered organizational unit' do
     describe 'by default' do
       before(:context) do
         @account_name = 'Fulfillment'
@@ -51,16 +89,16 @@ describe 'accounts' do
         @account_organizational_unit = 'Fulfillment'
 
         @plan = plan(role: :root) do |vars|
-          vars.organization = [
-            {
+          vars.organization = {
+            units: [{
               name: @account_organizational_unit,
               units: [],
               accounts: [
                 account(name: @account_name,
                         email: @account_email)
               ]
-            }
-          ]
+            }]
+          }
         end
       end
 
@@ -93,16 +131,18 @@ describe 'accounts' do
         @account_organizational_unit = 'Fulfillment'
 
         @plan = plan(role: :root) do |vars|
-          vars.organization = [
-            {
-              name: @account_organizational_unit,
-              units: [],
-              accounts: [
-                account(name: @account_name,
-                        allow_iam_users_access_to_billing: true)
-              ]
-            }
-          ]
+          vars.organization = {
+            units: [
+              {
+                name: @account_organizational_unit,
+                units: [],
+                accounts: [
+                  account(name: @account_name,
+                          allow_iam_users_access_to_billing: true)
+                ]
+              }
+            ]
+          }
         end
       end
 
@@ -122,16 +162,18 @@ describe 'accounts' do
         @account_organizational_unit = 'Fulfillment'
 
         @plan = plan(role: :root) do |vars|
-          vars.organization = [
-            {
-              name: @account_organizational_unit,
-              units: [],
-              accounts: [
-                account(name: @account_name,
-                        allow_iam_users_access_to_billing: false)
-              ]
-            }
-          ]
+          vars.organization = {
+            units: [
+              {
+                name: @account_organizational_unit,
+                units: [],
+                accounts: [
+                  account(name: @account_name,
+                          allow_iam_users_access_to_billing: false)
+                ]
+              }
+            ]
+          }
         end
       end
 
@@ -176,23 +218,25 @@ describe 'accounts' do
       @accounts_without_billing_access = [@account2]
 
       @plan = plan(role: :root) do |vars|
-        vars.organization = [
-          {
-            name: @account1_organizational_unit,
-            units: [],
-            accounts: [@account1]
-          },
-          {
-            name: @account2_organizational_unit,
-            units: [],
-            accounts: [@account2]
-          },
-          {
-            name: @account3_organizational_unit,
-            units: [],
-            accounts: [@account3]
-          }
-        ]
+        vars.organization = {
+          units: [
+            {
+              name: @account1_organizational_unit,
+              units: [],
+              accounts: [@account1]
+            },
+            {
+              name: @account2_organizational_unit,
+              units: [],
+              accounts: [@account2]
+            },
+            {
+              name: @account3_organizational_unit,
+              units: [],
+              accounts: [@account3]
+            }
+          ]
+        }
       end
     end
 
@@ -242,6 +286,46 @@ describe 'accounts' do
                 .with_attribute_value(:name, account[:name])
                 .with_attribute_value(:iam_user_access_to_billing, 'DENY'))
       end
+    end
+  end
+
+  context 'when deeply nested account specified' do
+    before(:context) do
+      @account_name = 'Fulfillment'
+      @account = account(name: @account_name)
+
+      @plan = plan(role: :root) do |vars|
+        vars.organization = {
+          units: [{
+            name: 'Level 1',
+            units: [{
+              name: 'Level 2',
+              units: [{
+                name: 'Level 3',
+                units: [{
+                  name: 'Level 4',
+                  units: [{
+                    name: 'Level 5',
+                    accounts: [@account]
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }
+      end
+    end
+
+    it 'outputs details of the accounts' do
+      expect(@plan)
+        .to(include_output_creation(name: 'accounts'))
+    end
+
+    it 'creates the accounts' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_account'
+        ).with_attribute_value(:name, @account_name))
     end
   end
 

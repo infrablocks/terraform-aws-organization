@@ -27,16 +27,18 @@ describe 'organizational units' do
   describe 'when organizational units is one level deep' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
-        vars.organization = [
-          {
-            name: 'Fulfillment',
-            units: []
-          },
-          {
-            name: 'Online',
-            units: []
-          }
-        ]
+        vars.organization = {
+          units: [
+            {
+              name: 'Fulfillment',
+              units: []
+            },
+            {
+              name: 'Online',
+              units: []
+            }
+          ]
+        }
       end
     end
 
@@ -62,21 +64,23 @@ describe 'organizational units' do
   context 'when organizational units is two levels deep' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
-        vars.organization = [
-          {
-            name: 'Fulfillment',
-            units: [
-              {
-                name: 'Warehouse',
-                units: []
-              },
-              {
-                name: 'Collections',
-                units: []
-              }
-            ]
-          }
-        ]
+        vars.organization = {
+          units: [
+            {
+              name: 'Fulfillment',
+              units: [
+                {
+                  name: 'Warehouse',
+                  units: []
+                },
+                {
+                  name: 'Collections',
+                  units: []
+                }
+              ]
+            }
+          ]
+        }
       end
     end
 
@@ -112,26 +116,28 @@ describe 'organizational units' do
   context 'when organizational units is three levels deep' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
-        vars.organization = [
-          {
-            name: 'Fulfillment',
-            units: [
-              {
-                name: 'Warehouse',
-                units: [
-                  {
-                    name: 'London',
-                    units: []
-                  },
-                  {
-                    name: 'Edinburgh',
-                    units: []
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+        vars.organization = {
+          units: [
+            {
+              name: 'Fulfillment',
+              units: [
+                {
+                  name: 'Warehouse',
+                  units: [
+                    {
+                      name: 'London',
+                      units: []
+                    },
+                    {
+                      name: 'Edinburgh',
+                      units: []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       end
     end
 
@@ -159,6 +165,152 @@ describe 'organizational units' do
           )
                 .with_attribute_value(:name, unit_name))
       end
+    end
+
+    it 'outputs details on each organizational unit' do
+      expect(@plan)
+        .to(include_output_creation(name: 'organizational_units'))
+    end
+  end
+
+  context 'when organizational units is four levels deep' do
+    before(:context) do
+      @plan = plan(role: :root) do |vars|
+        vars.organization = {
+          units: [
+            {
+              name: 'Fulfillment',
+              units: [
+                {
+                  name: 'Warehouse',
+                  units: [
+                    {
+                      name: 'London',
+                      units: [
+                        {
+                          name: 'Hackney',
+                          units: []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      end
+    end
+
+    it 'creates organizational units for the first level' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_organizational_unit'
+        )
+              .with_attribute_value(:name, 'Fulfillment'))
+    end
+
+    it 'creates organizational units for the second level' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_organizational_unit'
+        )
+              .with_attribute_value(:name, 'Warehouse'))
+    end
+
+    it 'creates organizational units for the third level' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_organizational_unit'
+        )
+              .with_attribute_value(:name, 'London'))
+    end
+
+    it 'creates organizational units for the fourth level' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_organizational_unit'
+        )
+              .with_attribute_value(:name, 'Hackney'))
+    end
+
+    it 'outputs details on each organizational unit' do
+      expect(@plan)
+        .to(include_output_creation(name: 'organizational_units'))
+    end
+  end
+
+  context 'when organizational units is five levels deep' do
+    before(:context) do
+      @plan = plan(role: :root) do |vars|
+        vars.organization = {
+          units: [
+            {
+              name: 'Fulfillment',
+              units: [
+                {
+                  name: 'Warehouse',
+                  units: [
+                    {
+                      name: 'London',
+                      units: [
+                        {
+                          name: 'Hackney',
+                          units: [
+                            {
+                              name: 'Shoreditch'
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      end
+    end
+
+    it 'creates organizational units for the first level' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_organizational_unit'
+        )
+              .with_attribute_value(:name, 'Fulfillment'))
+    end
+
+    it 'creates organizational units for the second level' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_organizational_unit'
+        )
+              .with_attribute_value(:name, 'Warehouse'))
+    end
+
+    it 'creates organizational units for the third level' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_organizational_unit'
+        )
+              .with_attribute_value(:name, 'London'))
+    end
+
+    it 'creates organizational units for the fourth level' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_organizational_unit'
+        )
+              .with_attribute_value(:name, 'Hackney'))
+    end
+
+    it 'creates organizational units for the fifth level' do
+      expect(@plan)
+        .to(include_resource_creation(
+          type: 'aws_organizations_organizational_unit'
+        )
+              .with_attribute_value(:name, 'Shoreditch'))
     end
 
     it 'outputs details on each organizational unit' do
