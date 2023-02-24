@@ -84,10 +84,9 @@ for more details.
 
 | Name                          | Description                                                                                            | Default | Required |
 |-------------------------------|--------------------------------------------------------------------------------------------------------|:-------:|:--------:|
-| feature_set                   | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING")                |   ALL   |   yes    |
-| aws_service_access_principals | A list of AWS service principal names for which you want to enable integration with your organization. |   []    |   yes    |
-| organizational_units          | The tree of organizational units in the organization                                                   |    -    |   yes    |
-| accounts                      | The accounts that are part of the organization                                                         |    -    |   yes    |
+| feature_set                   | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING")                |   ALL   |    no    |
+| aws_service_access_principals | A list of AWS service principal names for which you want to enable integration with your organization. |   []    |    no    |
+| organization                  | The tree of organizational units and accounts to construct. Defaults to an empty tree.                 |   []    |    no    |
 
 ### Outputs
 
@@ -100,7 +99,7 @@ for more details.
 ### Compatibility
 
 This module is compatible with Terraform versions greater than or equal to
-Terraform 1.0.
+Terraform 1.3.
 
 Development
 -----------

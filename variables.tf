@@ -42,5 +42,5 @@ variable "organization" {
     })), [])
   }))
   default = []
-  description = "The tree of organizational units to construct. Defaults to an empty tree."
+  description = "The tree of organizational units and accounts to construct. Defaults to an empty tree."
 }

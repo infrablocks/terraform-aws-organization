@@ -5,16 +5,34 @@ module "organization" {
 
   organization = [
     {
-      name: "Fulfillment",
-      units: [
+      name = "MyCompany",
+      accounts = [
         {
-          name: "Warehouse",
-          units: [
+          name = "MyCompany"
+          email = "root@company.com"
+        }
+      ]
+      units = [
+        {
+          name = "MyProduct",
+          units = [
             {
-              name: "London",
+              name = "Development",
+              accounts = [
+                {
+                  name = "Development"
+                  email = "development@company.com"
+                }
+              ]
             },
             {
-              name: "Edinburgh",
+              name = "Production",
+              accounts = [
+                {
+                  name = "Production"
+                  email = "production@company.com"
+                }
+              ]
             }
           ]
         }
