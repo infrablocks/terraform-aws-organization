@@ -22,7 +22,7 @@ configuration:
 ```hcl-terraform
 module "organisation" {
   source  = "infrablocks/organisation/aws"
-  version = "0.1.1"
+  version = "2.0.0"
 
   feature_set                   = "ALL"
   aws_service_access_principals = [
