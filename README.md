@@ -30,51 +30,48 @@ module "organisation" {
     "config.amazonaws.com"
   ]
 
-  organizational_units = [
+  organization = [
     {
-      name     = "Root",
-      children = [
+      name = "MyCompany",
+      accounts = [
         {
-          name     = "Parent",
-          children = [
+          name = "MyCompany"
+          email = "root@company.com"
+        }
+      ]
+      units = [
+        {
+          name = "MyProduct",
+          units = [
             {
-              name = "Dev",
+              name = "Development",
+              accounts = [
+                {
+                  name = "Development"
+                  email = "development@company.com"
+                }
+              ]
             },
             {
-              name = "Prod"
+              name = "Production",
+              accounts = [
+                {
+                  name = "Production"
+                  email = "production@company.com"
+                }
+              ]
             }
           ]
         }
       ]
     }
   ]
-
-  accounts = [
-    {
-      name                              = "Dev Gold"
-      email                             = "me+dev.gold@example.com"
-      organizational_unit               = "Dev"
-      allow_iam_users_access_to_billing = true
-    },
-    {
-      name                              = "Dev Silver"
-      email                             = "me+dev.silver@example.com"
-      organizational_unit               = "Dev"
-      allow_iam_users_access_to_billing = true
-    },
-    {
-      name                              = "Prod Platinum"
-      email                             = "me+prod.platinum@example.com"
-      organizational_unit               = "Prod"
-      allow_iam_users_access_to_billing = true
-    }
-  ]
 }
 ```
 
-Note: `organizational_units` can be nested up to 3 levels deep. Levels 1 & 2
-must include a `children` property, although it can be an empty array. Level 3
-must not include a `children` property.
+Note: `organization` can be nested up to 3 levels deep. Levels 1 & 2 may include
+a `units` property, although it can be an empty array. Level 3 must not include
+a `units` property.
 
 See the
 [Terraform registry entry](https://registry.terraform.io/modules/infrablocks/organization/aws/latest)
