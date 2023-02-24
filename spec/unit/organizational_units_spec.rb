@@ -27,14 +27,14 @@ describe 'organizational units' do
   describe 'when organizational units is one level deep' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
-        vars.organizational_units = [
+        vars.organization = [
           {
             name: 'Fulfillment',
-            children: []
+            units: []
           },
           {
             name: 'Online',
-            children: []
+            units: []
           }
         ]
       end
@@ -66,17 +66,17 @@ describe 'organizational units' do
   context 'when organizational units is two levels deep' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
-        vars.organizational_units = [
+        vars.organization = [
           {
             name: 'Fulfillment',
-            children: [
+            units: [
               {
                 name: 'Warehouse',
-                children: []
+                units: []
               },
               {
                 name: 'Collections',
-                children: []
+                units: []
               }
             ]
           }
@@ -121,20 +121,20 @@ describe 'organizational units' do
   context 'when organizational units is three levels deep' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
-        vars.organizational_units = [
+        vars.organization = [
           {
             name: 'Fulfillment',
-            children: [
+            units: [
               {
                 name: 'Warehouse',
-                children: [
+                units: [
                   {
                     name: 'London',
-                    children: []
+                    units: []
                   },
                   {
                     name: 'Edinburgh',
-                    children: []
+                    units: []
                   }
                 ]
               }

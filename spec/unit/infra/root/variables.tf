@@ -10,25 +10,30 @@ variable "aws_service_access_principals" {
   default = null
 }
 
-variable "organizational_units" {
+variable "organization" {
   type = list(object({
     name = string,
-    children = list(object({
+    accounts = optional(list(object({
       name = string,
-      children = list(object({
+      email = string,
+      allow_iam_users_access_to_billing = bool,
+    })), [])
+    units = optional(list(object({
+      name = string,
+      accounts = optional(list(object({
+        name = string,
+        email = string,
+        allow_iam_users_access_to_billing = bool,
+      })), [])
+      units = optional(list(object({
         name = string
-      }))
-    }))
-  }))
-  default = null
-}
-
-variable "accounts" {
-  type = list(object({
-    name = string,
-    email = string,
-    organizational_unit = string,
-    allow_iam_users_access_to_billing = bool,
+        accounts = optional(list(object({
+          name = string,
+          email = string,
+          allow_iam_users_access_to_billing = bool,
+        })), [])
+      })), [])
+    })), [])
   }))
   default = null
 }

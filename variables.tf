@@ -16,27 +16,31 @@ variable "aws_service_access_principals" {
   description = "A list of AWS service principal names for which you want to enable integration with your organization."
 }
 
-variable "organizational_units" {
+variable "organization" {
   type = list(object({
     name = string,
-    children = list(object({
+    accounts = optional(list(object({
       name = string,
-      children = list(object({
+      email = string,
+      allow_iam_users_access_to_billing = bool,
+    })), [])
+    units = optional(list(object({
+      name = string,
+      accounts = optional(list(object({
+        name = string,
+        email = string,
+        allow_iam_users_access_to_billing = bool,
+      })), [])
+      units = optional(list(object({
         name = string
-      }))
-    }))
+        accounts = optional(list(object({
+          name = string,
+          email = string,
+          allow_iam_users_access_to_billing = bool,
+        })), [])
+      })), [])
+    })), [])
   }))
   default = []
   description = "The tree of organizational units to construct. Defaults to an empty tree."
-}
-
-variable "accounts" {
-  type = list(object({
-    name = string,
-    email = string,
-    organizational_unit = string,
-    allow_iam_users_access_to_billing = bool,
-  }))
-  default = []
-  description = "The set of accounts to create. Defaults to an empty list."
 }

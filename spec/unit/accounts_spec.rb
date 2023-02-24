@@ -25,7 +25,7 @@ describe 'accounts' do
   context 'when no accounts specified' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
-        vars.accounts = []
+        vars.organization = []
       end
     end
 
@@ -51,16 +51,15 @@ describe 'accounts' do
         @account_organizational_unit = 'Fulfillment'
 
         @plan = plan(role: :root) do |vars|
-          vars.organizational_units = [
+          vars.organization = [
             {
               name: @account_organizational_unit,
-              children: []
+              units: [],
+              accounts: [
+                account(name: @account_name,
+                        email: @account_email)
+              ]
             }
-          ]
-          vars.accounts = [
-            account(name: @account_name,
-                    email: @account_email,
-                    organizational_unit: @account_organizational_unit)
           ]
         end
       end
@@ -98,16 +97,15 @@ describe 'accounts' do
         @account_organizational_unit = 'Fulfillment'
 
         @plan = plan(role: :root) do |vars|
-          vars.organizational_units = [
+          vars.organization = [
             {
               name: @account_organizational_unit,
-              children: []
+              units: [],
+              accounts: [
+                account(name: @account_name,
+                        allow_iam_users_access_to_billing: true)
+              ]
             }
-          ]
-          vars.accounts = [
-            account(name: @account_name,
-                    allow_iam_users_access_to_billing: true,
-                    organizational_unit: @account_organizational_unit)
           ]
         end
       end
@@ -128,16 +126,15 @@ describe 'accounts' do
         @account_organizational_unit = 'Fulfillment'
 
         @plan = plan(role: :root) do |vars|
-          vars.organizational_units = [
+          vars.organization = [
             {
               name: @account_organizational_unit,
-              children: []
+              units: [],
+              accounts: [
+                account(name: @account_name,
+                        allow_iam_users_access_to_billing: false)
+              ]
             }
-          ]
-          vars.accounts = [
-            account(name: @account_name,
-                    allow_iam_users_access_to_billing: false,
-                    organizational_unit: @account_organizational_unit)
           ]
         end
       end
@@ -169,16 +166,13 @@ describe 'accounts' do
 
       @account1 = account(name: @account1_name,
                           email: @account1_email,
-                          allow_iam_users_access_to_billing: true,
-                          organizational_unit: @account1_organizational_unit)
+                          allow_iam_users_access_to_billing: true)
       @account2 = account(name: @account2_name,
                           email: @account2_email,
-                          allow_iam_users_access_to_billing: false,
-                          organizational_unit: @account2_organizational_unit)
+                          allow_iam_users_access_to_billing: false)
       @account3 = account(name: @account3_name,
                           email: @account3_email,
-                          allow_iam_users_access_to_billing: true,
-                          organizational_unit: @account3_organizational_unit)
+                          allow_iam_users_access_to_billing: true)
 
       @accounts = [@account1, @account2, @account3]
 
@@ -186,21 +180,23 @@ describe 'accounts' do
       @accounts_without_billing_access = [@account2]
 
       @plan = plan(role: :root) do |vars|
-        vars.organizational_units = [
+        vars.organization = [
           {
             name: @account1_organizational_unit,
-            children: []
+            units: [],
+            accounts: [@account1]
           },
           {
             name: @account2_organizational_unit,
-            children: []
+            units: [],
+            accounts: [@account2]
           },
           {
             name: @account3_organizational_unit,
-            children: []
+            units: [],
+            accounts: [@account3]
           }
         ]
-        vars.accounts = @accounts
       end
     end
 
@@ -265,7 +261,6 @@ describe 'accounts' do
     {
       name: "test-#{id}",
       email: "test-#{id}@example.com",
-      organizational_unit: 'SomeUnit',
       allow_iam_users_access_to_billing: false
     }.merge(overrides)
   end
