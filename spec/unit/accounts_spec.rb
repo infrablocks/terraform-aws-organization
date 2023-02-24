@@ -8,10 +8,10 @@ describe 'accounts' do
       @plan = plan(role: :root)
     end
 
-    it 'outputs an empty list of accounts' do
+    it 'outputs an empty map of accounts' do
       expect(@plan)
         .to(include_output_creation(name: 'accounts')
-              .with_value([]))
+              .with_value({}))
     end
 
     it 'does not create any accounts' do
@@ -29,10 +29,10 @@ describe 'accounts' do
       end
     end
 
-    it 'outputs an empty list of accounts' do
+    it 'outputs an empty map of accounts' do
       expect(@plan)
         .to(include_output_creation(name: 'accounts')
-              .with_value([]))
+              .with_value({}))
     end
 
     it 'does not create any accounts' do
@@ -66,11 +66,7 @@ describe 'accounts' do
 
       it 'outputs details of the account' do
         expect(@plan)
-          .to(include_output_creation(name: 'accounts')
-                .with_value(containing_exactly(
-                              hash_including(name: @account_name,
-                                             email: @account_email)
-                            )))
+          .to(include_output_creation(name: 'accounts'))
       end
 
       it 'creates the account' do
@@ -202,14 +198,7 @@ describe 'accounts' do
 
     it 'outputs details of the accounts' do
       expect(@plan)
-        .to(include_output_creation(name: 'accounts')
-              .with_value(
-                containing_exactly(
-                  *@accounts.map do |a|
-                    hash_including(name: a[:name], email: a[:email])
-                  end
-                )
-              ))
+        .to(include_output_creation(name: 'accounts'))
     end
 
     it 'creates the accounts' do

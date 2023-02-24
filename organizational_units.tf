@@ -70,9 +70,12 @@ locals {
       name = ou.name,
     }
   ]
-  all_ou_attributes = concat(
-    local.level_1_ou_attributes,
-    local.level_2_ou_attributes,
-    local.level_3_ou_attributes
-  )
+  all_ou_attributes = {
+    for ou in concat(
+      local.level_1_ou_attributes,
+      local.level_2_ou_attributes,
+      local.level_3_ou_attributes
+    ) :
+    ou.id => ou
+  }
 }

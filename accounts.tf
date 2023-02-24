@@ -57,14 +57,14 @@ resource "aws_organizations_account" "account" {
 }
 
 locals {
-  all_account_attributes = [
+  all_account_attributes = {
     for account in values(aws_organizations_account.account)[*] :
-      {
+      account.id => {
         id = account.id,
         arn = account.arn,
         name  = account.name
         email = account.email
         parent_id = account.parent_id,
       }
-    ]
+  }
 }

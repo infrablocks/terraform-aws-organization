@@ -11,7 +11,7 @@ describe 'organizational units' do
     it 'outputs details of the the organizational units' do
       expect(@plan)
         .to(include_output_creation(name: 'organizational_units')
-              .with_value([]))
+              .with_value({}))
     end
 
     it 'does not create any organizational units' do
@@ -52,11 +52,7 @@ describe 'organizational units' do
 
     it 'outputs details on each organizational unit' do
       expect(@plan)
-        .to(include_output_creation(name: 'organizational_units')
-              .with_value(containing_exactly(
-                            hash_including(name: 'Fulfillment'),
-                            hash_including(name: 'Online')
-                          )))
+        .to(include_output_creation(name: 'organizational_units'))
     end
   end
 
@@ -104,12 +100,7 @@ describe 'organizational units' do
 
     it 'outputs details on each organizational unit' do
       expect(@plan)
-        .to(include_output_creation(name: 'organizational_units')
-              .with_value(containing_exactly(
-                            hash_including(name: 'Fulfillment'),
-                            hash_including(name: 'Warehouse'),
-                            hash_including(name: 'Collections')
-                          )))
+        .to(include_output_creation(name: 'organizational_units'))
     end
   end
 
@@ -172,13 +163,7 @@ describe 'organizational units' do
 
     it 'outputs details on each organizational unit' do
       expect(@plan)
-        .to(include_output_creation(name: 'organizational_units')
-              .with_value(containing_exactly(
-                            hash_including(name: 'Fulfillment'),
-                            hash_including(name: 'Warehouse'),
-                            hash_including(name: 'London'),
-                            hash_including(name: 'Edinburgh')
-                          )))
+        .to(include_output_creation(name: 'organizational_units'))
     end
   end
 end

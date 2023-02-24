@@ -3,20 +3,18 @@ module "organization" {
 
   feature_set = "ALL"
 
-  organizational_units = [
+  organization = [
     {
       name: "Fulfillment",
-      children: [
+      units: [
         {
           name: "Warehouse",
-          children: [
+          units: [
             {
               name: "London",
-              children: []
             },
             {
               name: "Edinburgh",
-              children: []
             }
           ]
         }
