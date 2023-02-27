@@ -3,8 +3,7 @@ module "organization" {
 
   feature_set = "ALL"
 
-  organization = [
-    {
+  organization = {
       name = "MyCompany",
       accounts = [
         {
@@ -38,5 +37,4 @@ module "organization" {
         }
       ]
     }
-  ]
 }
