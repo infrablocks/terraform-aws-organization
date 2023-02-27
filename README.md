@@ -69,8 +69,8 @@ module "organisation" {
 }
 ```
 
-Note: `organization` can be nested up to 3 levels deep. Levels 1 & 2 may include
-a `units` property, although it can be an empty array. Level 3 must not include
+Note: `organization` can be nested up to 5 levels deep. Levels 1 through 4 may include
+a `units` property, although it can be an empty array. Level 5 must not include
 a `units` property.
 
 See the
