@@ -31,10 +31,12 @@ describe 'organizational units' do
           units: [
             {
               name: 'Fulfillment',
+              key: 'fulfillment',
               units: []
             },
             {
               name: 'Online',
+              key: 'online',
               units: []
             }
           ]
@@ -68,13 +70,16 @@ describe 'organizational units' do
           units: [
             {
               name: 'Fulfillment',
+              key: 'fulfillment',
               units: [
                 {
                   name: 'Warehouse',
+                  key: 'warehouse',
                   units: []
                 },
                 {
                   name: 'Collections',
+                  key: 'collections',
                   units: []
                 }
               ]
@@ -120,16 +125,20 @@ describe 'organizational units' do
           units: [
             {
               name: 'Fulfillment',
+              key: 'fulfillment',
               units: [
                 {
                   name: 'Warehouse',
+                  key: 'warehouse',
                   units: [
                     {
                       name: 'London',
+                      key: 'london',
                       units: []
                     },
                     {
                       name: 'Edinburgh',
+                      key: 'edinburgh',
                       units: []
                     }
                   ]
@@ -180,15 +189,19 @@ describe 'organizational units' do
           units: [
             {
               name: 'Fulfillment',
+              key: 'fulfillment',
               units: [
                 {
                   name: 'Warehouse',
+                  key: 'warehouse',
                   units: [
                     {
                       name: 'London',
+                      key: 'london',
                       units: [
                         {
                           name: 'Hackney',
+                          key: 'hackney',
                           units: []
                         }
                       ]
@@ -247,18 +260,23 @@ describe 'organizational units' do
           units: [
             {
               name: 'Fulfillment',
+              key: 'fulfillment',
               units: [
                 {
                   name: 'Warehouse',
+                  key: 'warehouse',
                   units: [
                     {
                       name: 'London',
+                      key: 'london',
                       units: [
                         {
                           name: 'Hackney',
+                          key: 'hackney',
                           units: [
                             {
-                              name: 'Shoreditch'
+                              name: 'Shoreditch',
+                              key: 'shoreditch'
                             }
                           ]
                         }

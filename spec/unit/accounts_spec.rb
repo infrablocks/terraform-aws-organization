@@ -92,6 +92,7 @@ describe 'accounts' do
           vars.organization = {
             units: [{
               name: @account_organizational_unit,
+              key: @account_organizational_unit,
               units: [],
               accounts: [
                 account(name: @account_name,
@@ -135,6 +136,7 @@ describe 'accounts' do
             units: [
               {
                 name: @account_organizational_unit,
+                key: @account_organizational_unit,
                 units: [],
                 accounts: [
                   account(name: @account_name,
@@ -166,6 +168,7 @@ describe 'accounts' do
             units: [
               {
                 name: @account_organizational_unit,
+                key: @account_organizational_unit,
                 units: [],
                 accounts: [
                   account(name: @account_name,
@@ -222,16 +225,19 @@ describe 'accounts' do
           units: [
             {
               name: @account1_organizational_unit,
+              key: @account1_organizational_unit,
               units: [],
               accounts: [@account1]
             },
             {
               name: @account2_organizational_unit,
+              key: @account2_organizational_unit,
               units: [],
               accounts: [@account2]
             },
             {
               name: @account3_organizational_unit,
+              key: @account3_organizational_unit,
               units: [],
               accounts: [@account3]
             }
@@ -298,14 +304,19 @@ describe 'accounts' do
         vars.organization = {
           units: [{
             name: 'Level 1',
+            key: 'level-1',
             units: [{
               name: 'Level 2',
+              key: 'level-2',
               units: [{
                 name: 'Level 3',
+                key: 'level-3',
                 units: [{
                   name: 'Level 4',
+                  key: 'level-4',
                   units: [{
                     name: 'Level 5',
+                    key: 'level-5',
                     accounts: [@account]
                   }]
                 }]
@@ -333,6 +344,7 @@ describe 'accounts' do
     id = SecureRandom.alphanumeric(4)
     {
       name: "test-#{id}",
+      key: "test-#{id}",
       email: "test-#{id}@example.com",
       allow_iam_users_access_to_billing: false
     }.merge(overrides)

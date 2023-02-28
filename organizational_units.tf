@@ -8,7 +8,8 @@ locals {
       for level_2_ou in level_1_ou.units :
       {
         name : level_2_ou.name,
-        parent : level_1_ou.name
+        key : level_2_ou.key,
+        parent : level_1_ou.key
       }
     ]
   ])
@@ -20,7 +21,8 @@ locals {
         for level_3_ou in level_2_ou.units :
         {
           name : level_3_ou.name,
-          parent : level_2_ou.name
+          key : level_3_ou.key,
+          parent : level_2_ou.key
         }
       ]
     ]
@@ -35,7 +37,8 @@ locals {
           for level_4_ou in level_3_ou.units :
           {
             name : level_4_ou.name,
-            parent : level_3_ou.name
+            key : level_4_ou.key,
+            parent : level_3_ou.key
           }
         ]
       ]
@@ -53,7 +56,8 @@ locals {
             for level_5_ou in level_4_ou.units :
             {
               name : level_5_ou.name,
-              parent : level_4_ou.name
+              key : level_5_ou.key,
+              parent : level_4_ou.key
             }
           ]
         ]
@@ -63,31 +67,31 @@ locals {
 }
 
 resource "aws_organizations_organizational_unit" "level_1_ous" {
-  for_each  = {for record in local.level_1_ou_arguments : record.name => record}
+  for_each  = {for record in local.level_1_ou_arguments : record.key => record}
   name      = each.value.name
   parent_id = aws_organizations_organization.organization.roots[0].id
 }
 
 resource "aws_organizations_organizational_unit" "level_2_ous" {
-  for_each  = {for record in local.level_2_ou_arguments : record.name => record}
+  for_each  = {for record in local.level_2_ou_arguments : record.key => record}
   name      = each.value.name
   parent_id = aws_organizations_organizational_unit.level_1_ous[each.value.parent].id
 }
 
 resource "aws_organizations_organizational_unit" "level_3_ous" {
-  for_each  = {for record in local.level_3_ou_arguments : record.name => record}
+  for_each  = {for record in local.level_3_ou_arguments : record.key => record}
   name      = each.value.name
   parent_id = aws_organizations_organizational_unit.level_2_ous[each.value.parent].id
 }
 
 resource "aws_organizations_organizational_unit" "level_4_ous" {
-  for_each  = {for record in local.level_4_ou_arguments : record.name => record}
+  for_each  = {for record in local.level_4_ou_arguments : record.key => record}
   name      = each.value.name
   parent_id = aws_organizations_organizational_unit.level_3_ous[each.value.parent].id
 }
 
 resource "aws_organizations_organizational_unit" "level_5_ous" {
-  for_each  = {for record in local.level_5_ou_arguments : record.name => record}
+  for_each  = {for record in local.level_5_ou_arguments : record.key => record}
   name      = each.value.name
   parent_id = aws_organizations_organizational_unit.level_4_ous[each.value.parent].id
 }

@@ -4,31 +4,36 @@ module "organization" {
   feature_set = "ALL"
 
   organization = {
-      name = "MyCompany",
       accounts = [
         {
-          name = "MyCompany"
+          name = "Default"
+          key = "mycompany-default"
           email = "root@company.com"
         }
       ]
       units = [
         {
           name = "MyProduct",
+          key = "mycompany-myproduct"
           units = [
             {
               name = "Development",
+              key = "mycompany-myproduct-development"
               accounts = [
                 {
-                  name = "Development"
+                  name = "Blue"
+                  key = "mycompany-myproduct-development-blue"
                   email = "development@company.com"
                 }
               ]
             },
             {
               name = "Production",
+              key = "mycompany-myproduct-production"
               accounts = [
                 {
-                  name = "Production"
+                  name = "Blue"
+                  key = "mycompany-myproduct-production-blue"
                   email = "production@company.com"
                 }
               ]

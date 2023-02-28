@@ -1,57 +1,68 @@
 variable "feature_set" {
-  type = string
-  default = "ALL"
-  nullable = false
+  type        = string
+  default     = "ALL"
+  nullable    = false
   description = "The feature set of the organization. One of 'ALL' or 'CONSOLIDATED_BILLING'."
 }
 
 variable "aws_service_access_principals" {
-  type = list(string)
-  default = []
-  nullable = false
+  type        = list(string)
+  default     = []
+  nullable    = false
   description = "A list of AWS service principal names for which you want to enable integration with your organization."
 }
 
 variable "organization" {
   type = object({
     accounts = optional(list(object({
-      name = string,
-      email = string,
+      name                              = string,
+      key                               = string,
+      email                             = string,
       allow_iam_users_access_to_billing = bool,
     })), [])
     units = optional(list(object({
-      name = string,
+      name     = string,
+      key      = string,
       accounts = optional(list(object({
-        name = string,
-        email = string,
+        name                              = string,
+        key                               = string,
+        email                             = string,
         allow_iam_users_access_to_billing = bool,
       })), [])
       units = optional(list(object({
-        name = string,
+        name     = string,
+        key      = string,
         accounts = optional(list(object({
-          name = string,
-          email = string,
+          name                              = string,
+          key                               = string,
+          email                             = string,
           allow_iam_users_access_to_billing = bool,
         })), [])
         units = optional(list(object({
-          name = string
+          name     = string,
+          key      = string,
           accounts = optional(list(object({
-            name = string,
-            email = string,
+            name                              = string,
+            key                               = string,
+            email                             = string,
             allow_iam_users_access_to_billing = bool,
           })), [])
           units = optional(list(object({
-            name = string
+            name     = string,
+            key      = string,
             accounts = optional(list(object({
-              name = string,
-              email = string,
+              name                              = string,
+              key                               = string,
+              email                             = string,
               allow_iam_users_access_to_billing = bool,
             })), [])
             units = optional(list(object({
-              name = string
+              name     = string,
+              key      = string,
               accounts = optional(list(object({
-                name = string,
-                email = string,
+                name                              = string,
+                key                               = string,
+                email                             = string,
                 allow_iam_users_access_to_billing = bool,
               })), [])
             })), [])
