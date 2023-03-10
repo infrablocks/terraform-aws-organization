@@ -12,7 +12,7 @@ BACKWARDS INCOMPATIBILITIES / NOTES:
   will suggest that it needs to destroy all existing resources and create new
   ones. To overcome this you will need to manually update your Terraform state
   file.
-* This module now uses organizational unit and account output indexing by id
+* This module now uses organizational unit and account output indexing by key
   rather than array index. This means that if you're leveraging the outputs in
   other modules you'll need to update the usage. 
 
