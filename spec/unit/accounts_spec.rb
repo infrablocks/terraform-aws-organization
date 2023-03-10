@@ -52,7 +52,8 @@ describe 'accounts' do
         vars.organization = {
           accounts: [
             account(name: @account_name,
-                    email: @account_email)
+                    email: @account_email,
+                    key: 'finance_key')
           ]
         }
       end
@@ -60,7 +61,15 @@ describe 'accounts' do
 
     it 'outputs details of the account' do
       expect(@plan)
-        .to(include_output_creation(name: 'accounts'))
+        .to(include_output_creation(name: 'accounts')
+              .with_value(
+                a_hash_including(
+                  finance_key: a_hash_including(
+                    name: @account_name,
+                    email: @account_email
+                  )
+                )
+              ))
     end
 
     it 'creates the account' do
@@ -96,7 +105,8 @@ describe 'accounts' do
               units: [],
               accounts: [
                 account(name: @account_name,
-                        email: @account_email)
+                        email: @account_email,
+                        key: 'fulfillment_key')
               ]
             }]
           }
@@ -105,7 +115,15 @@ describe 'accounts' do
 
       it 'outputs details of the account' do
         expect(@plan)
-          .to(include_output_creation(name: 'accounts'))
+          .to(include_output_creation(name: 'accounts')
+                .with_value(
+                  a_hash_including(
+                    fulfillment_key: a_hash_including(
+                      name: @account_name,
+                      email: @account_email
+                    )
+                  )
+                ))
       end
 
       it 'creates the account' do
@@ -207,13 +225,16 @@ describe 'accounts' do
 
       @account1 = account(name: @account1_name,
                           email: @account1_email,
-                          allow_iam_users_access_to_billing: true)
+                          allow_iam_users_access_to_billing: true,
+                          key: 'fulfillment_key')
       @account2 = account(name: @account2_name,
                           email: @account2_email,
-                          allow_iam_users_access_to_billing: false)
+                          allow_iam_users_access_to_billing: false,
+                          key: 'billing_key')
       @account3 = account(name: @account3_name,
                           email: @account3_email,
-                          allow_iam_users_access_to_billing: true)
+                          allow_iam_users_access_to_billing: true,
+                          key: 'online_key')
 
       @accounts = [@account1, @account2, @account3]
 
@@ -248,7 +269,14 @@ describe 'accounts' do
 
     it 'outputs details of the accounts' do
       expect(@plan)
-        .to(include_output_creation(name: 'accounts'))
+        .to(include_output_creation(name: 'accounts')
+              .with_value(
+                a_hash_including(
+                  fulfillment_key: a_hash_including(name: @account1_name),
+                  billing_key: a_hash_including(name: @account2_name),
+                  online_key: a_hash_including(name: @account3_name)
+                )
+              ))
     end
 
     it 'creates the accounts' do
@@ -298,7 +326,8 @@ describe 'accounts' do
   context 'when deeply nested account specified' do
     before(:context) do
       @account_name = 'Fulfillment'
-      @account = account(name: @account_name)
+      @account = account(name: @account_name,
+                         key: 'fulfillment_key')
 
       @plan = plan(role: :root) do |vars|
         vars.organization = {
@@ -329,7 +358,12 @@ describe 'accounts' do
 
     it 'outputs details of the accounts' do
       expect(@plan)
-        .to(include_output_creation(name: 'accounts'))
+        .to(include_output_creation(name: 'accounts')
+              .with_value(
+                a_hash_including(
+                  fulfillment_key: a_hash_including(name: @account_name)
+                )
+              ))
     end
 
     it 'creates the accounts' do
