@@ -56,7 +56,13 @@ describe 'organizational units' do
 
     it 'outputs details on each organizational unit' do
       expect(@plan)
-        .to(include_output_creation(name: 'organizational_units'))
+        .to(include_output_creation(name: 'organizational_units')
+              .with_value(
+                a_hash_including(
+                  fulfillment: a_hash_including(name: 'Fulfillment'),
+                  online: a_hash_including(name: 'Online')
+                )
+              ))
     end
   end
 
@@ -109,7 +115,14 @@ describe 'organizational units' do
 
     it 'outputs details on each organizational unit' do
       expect(@plan)
-        .to(include_output_creation(name: 'organizational_units'))
+        .to(include_output_creation(name: 'organizational_units')
+              .with_value(
+                a_hash_including(
+                  fulfillment: a_hash_including(name: 'Fulfillment'),
+                  warehouse: a_hash_including(name: 'Warehouse'),
+                  collections: a_hash_including(name: 'Collections')
+                )
+              ))
     end
   end
 
@@ -178,7 +191,15 @@ describe 'organizational units' do
 
     it 'outputs details on each organizational unit' do
       expect(@plan)
-        .to(include_output_creation(name: 'organizational_units'))
+        .to(include_output_creation(name: 'organizational_units')
+              .with_value(
+                a_hash_including(
+                  fulfillment: a_hash_including(name: 'Fulfillment'),
+                  warehouse: a_hash_including(name: 'Warehouse'),
+                  london: a_hash_including(name: 'London'),
+                  edinburgh: a_hash_including(name: 'Edinburgh')
+                )
+              ))
     end
   end
 
@@ -249,7 +270,15 @@ describe 'organizational units' do
 
     it 'outputs details on each organizational unit' do
       expect(@plan)
-        .to(include_output_creation(name: 'organizational_units'))
+        .to(include_output_creation(name: 'organizational_units')
+              .with_value(
+                a_hash_including(
+                  fulfillment: a_hash_including(name: 'Fulfillment'),
+                  warehouse: a_hash_including(name: 'Warehouse'),
+                  london: a_hash_including(name: 'London'),
+                  hackney: a_hash_including(name: 'Hackney')
+                )
+              ))
     end
   end
 
@@ -333,7 +362,16 @@ describe 'organizational units' do
 
     it 'outputs details on each organizational unit' do
       expect(@plan)
-        .to(include_output_creation(name: 'organizational_units'))
+        .to(include_output_creation(name: 'organizational_units')
+              .with_value(
+                a_hash_including(
+                  fulfillment: a_hash_including(name: 'Fulfillment'),
+                  warehouse: a_hash_including(name: 'Warehouse'),
+                  london: a_hash_including(name: 'London'),
+                  hackney: a_hash_including(name: 'Hackney'),
+                  shoreditch: a_hash_including(name: 'Shoreditch')
+                )
+              ))
     end
   end
 end
