@@ -87,6 +87,7 @@ for more details.
 | feature_set                   | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING")                |   ALL   |    no    |
 | aws_service_access_principals | A list of AWS service principal names for which you want to enable integration with your organization. |   []    |    no    |
 | organization                  | The tree of organizational units and accounts to construct. Defaults to an empty tree.                 |   []    |    no    |
+| enabled_policy_types          | A list organizations policy types to enable in the Organization Root                                   |   []    |    no    |
 
 ### Outputs
 
