@@ -12,6 +12,13 @@ variable "aws_service_access_principals" {
   description = "A list of AWS service principal names for which you want to enable integration with your organization."
 }
 
+variable "enabled_policy_types" {
+  type        = list(string)
+  default     = []
+  nullable    = false
+  description = "A list organizations policy types to enable in the Organization Root"
+}
+
 variable "organization" {
   type = object({
     accounts = optional(list(object({
