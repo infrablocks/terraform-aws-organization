@@ -1,4 +1,13 @@
-## 2.0.0 (October 12th, 2022)
+## Unreleased
+
+IMPROVEMENTS:
+
+* Added an `enabled_policy_types` variable to allow passing through enabled
+  policy types to the created organization.
+* Made `allow_iam_users_access_to_billing` on account definitions optional,
+  defaulting to `true` as is the case when not provided to the AWS API.
+
+## 2.0.0 (March 10th, 2023)
 
 BACKWARDS INCOMPATIBILITIES / NOTES:
 

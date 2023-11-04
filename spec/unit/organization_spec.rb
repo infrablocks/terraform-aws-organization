@@ -24,6 +24,12 @@ describe 'organization' do
               .with_attribute_value(:aws_service_access_principals, nil))
     end
 
+    it 'has no enabled policy types' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_organizations_organization')
+              .with_attribute_value(:enabled_policy_types, nil))
+    end
+
     it 'outputs the organization ARN' do
       expect(@plan)
         .to(include_output_creation(name: 'organization_arn'))
@@ -61,6 +67,41 @@ describe 'organization' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_organizations_organization')
               .with_attribute_value(:aws_service_access_principals, nil))
+    end
+  end
+
+  context 'when enabled policy types are provided' do
+    before(:context) do
+      @enabled_policy_types = %w[
+        SERVICE_CONTROL_POLICY
+        TAG_POLICY
+      ]
+
+      @plan = plan(role: :root) do |vars|
+        vars.enabled_policy_types = @enabled_policy_types
+      end
+    end
+
+    it 'has the provided enabled policy types' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_organizations_organization')
+              .with_attribute_value(
+                :enabled_policy_types, @enabled_policy_types
+              ))
+    end
+  end
+
+  context 'when enabled policy types is an empty list' do
+    before(:context) do
+      @plan = plan(role: :root) do |vars|
+        vars.enabled_policy_types = []
+      end
+    end
+
+    it 'has no enabled policy types' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_organizations_organization')
+              .with_attribute_value(:enabled_policy_types, nil))
     end
   end
 
