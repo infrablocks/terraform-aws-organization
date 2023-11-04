@@ -395,8 +395,8 @@ describe 'accounts' do
     it 'allows IAM users access to billing' do
       expect(@plan)
         .to(include_resource_creation(
-              type: 'aws_organizations_account'
-            )
+          type: 'aws_organizations_account'
+        )
               .with_attribute_value(:name, @account_name)
               .with_attribute_value(:iam_user_access_to_billing, 'ALLOW'))
     end

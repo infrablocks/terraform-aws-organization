@@ -86,7 +86,8 @@ describe 'organization' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_organizations_organization')
               .with_attribute_value(
-                :enabled_policy_types, @enabled_policy_types))
+                :enabled_policy_types, @enabled_policy_types
+              ))
     end
   end
 
