@@ -21,7 +21,7 @@ configuration:
 
 ```hcl-terraform
 module "organisation" {
-  source  = "infrablocks/organisation/aws"
+  source  = "infrablocks/organization/aws"
   version = "2.0.0"
 
   feature_set                   = "ALL"
