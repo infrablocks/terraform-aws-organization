@@ -10,13 +10,18 @@ variable "aws_service_access_principals" {
   default = null
 }
 
+variable "enabled_policy_types" {
+  type    = list(string)
+  default = null
+}
+
 variable "organization" {
   type = object({
     accounts = optional(list(object({
       name                              = string,
       key                               = string,
       email                             = string,
-      allow_iam_users_access_to_billing = bool,
+      allow_iam_users_access_to_billing = optional(bool, null),
     })), [])
     units = optional(list(object({
       name     = string,
@@ -25,7 +30,7 @@ variable "organization" {
         name                              = string,
         key                               = string,
         email                             = string,
-        allow_iam_users_access_to_billing = bool,
+        allow_iam_users_access_to_billing = optional(bool, null),
       })), [])
       units = optional(list(object({
         name     = string,
@@ -34,7 +39,7 @@ variable "organization" {
           name                              = string,
           key                               = string,
           email                             = string,
-          allow_iam_users_access_to_billing = bool,
+          allow_iam_users_access_to_billing = optional(bool, null),
         })), [])
         units = optional(list(object({
           name     = string,
@@ -43,7 +48,7 @@ variable "organization" {
             name                              = string,
             key                               = string,
             email                             = string,
-            allow_iam_users_access_to_billing = bool,
+            allow_iam_users_access_to_billing = optional(bool, null),
           })), [])
           units = optional(list(object({
             name     = string,
@@ -52,7 +57,7 @@ variable "organization" {
               name                              = string,
               key                               = string,
               email                             = string,
-              allow_iam_users_access_to_billing = bool,
+              allow_iam_users_access_to_billing = optional(bool, null),
             })), [])
             units = optional(list(object({
               name     = string,
@@ -61,7 +66,7 @@ variable "organization" {
                 name                              = string,
                 key                               = string,
                 email                             = string,
-                allow_iam_users_access_to_billing = bool,
+                allow_iam_users_access_to_billing = optional(bool, null),
               })), [])
             })), [])
           })), [])

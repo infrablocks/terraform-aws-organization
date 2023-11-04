@@ -374,6 +374,34 @@ describe 'accounts' do
     end
   end
 
+  context 'when allow_iam_users_access_to_billing not specified on account' do
+    before(:context) do
+      @account_name = 'Finance'
+      @account_email = 'finance@example.com'
+
+      @plan = plan(role: :root) do |vars|
+        vars.organization = {
+          accounts: [
+            {
+              name: @account_name,
+              email: @account_email,
+              key: 'finance_key'
+            }
+          ]
+        }
+      end
+    end
+
+    it 'allows IAM users access to billing' do
+      expect(@plan)
+        .to(include_resource_creation(
+              type: 'aws_organizations_account'
+            )
+              .with_attribute_value(:name, @account_name)
+              .with_attribute_value(:iam_user_access_to_billing, 'ALLOW'))
+    end
+  end
+
   def account(overrides = {})
     id = SecureRandom.alphanumeric(4)
     {

@@ -120,11 +120,7 @@ resource "aws_organizations_account" "account" {
   name  = each.value.name
   email = each.value.email
 
-  iam_user_access_to_billing = (
-    each.value.allow_iam_users_access_to_billing != null ?
-      each.value.allow_iam_users_access_to_billing ? "ALLOW" : "DENY" :
-    null
-  )
+  iam_user_access_to_billing = each.value.allow_iam_users_access_to_billing ? "ALLOW" : "DENY"
 
   parent_id = each.value.parent.id
 }

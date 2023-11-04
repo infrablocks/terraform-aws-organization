@@ -29,38 +29,42 @@ module "organisation" {
     "cloudtrail.amazonaws.com",
     "config.amazonaws.com"
   ]
+  enabled_policy_types = [
+    "SERVICE_CONTROL_POLICY",
+    "TAG_POLICY"
+  ]
 
   organization = {
     accounts = [
       {
-        name = "Default"
-        key = "mycompany-default"
+        name  = "Default"
+        key   = "mycompany-default"
         email = "root@company.com"
       }
     ]
     units = [
       {
-        name = "MyProduct",
-        key = "mycompany-myproduct"
+        name  = "MyProduct",
+        key   = "mycompany-myproduct"
         units = [
           {
-            name = "Development",
-            key = "mycompany-myproduct-development"
+            name     = "Development",
+            key      = "mycompany-myproduct-development"
             accounts = [
               {
-                name = "Blue"
-                key = "mycompany-myproduct-development-blue"
+                name  = "Blue"
+                key   = "mycompany-myproduct-development-blue"
                 email = "development@company.com"
               }
             ]
           },
           {
-            name = "Production",
-            key = "mycompany-myproduct-production"
+            name     = "Production",
+            key      = "mycompany-myproduct-production"
             accounts = [
               {
-                name = "Blue"
-                key = "mycompany-myproduct-production-blue"
+                name  = "Blue"
+                key   = "mycompany-myproduct-production-blue"
                 email = "production@company.com"
               }
             ]
@@ -72,7 +76,8 @@ module "organisation" {
 }
 ```
 
-Note: `organization` can be nested up to 5 levels deep. Levels 1 through 4 may include
+Note: `organization` can be nested up to 5 levels deep. Levels 1 through 4 may
+include
 a `units` property, although it can be an empty array. Level 5 must not include
 a `units` property.
 
@@ -82,20 +87,20 @@ for more details.
 
 ### Inputs
 
-| Name                          | Description                                                                                            | Default | Required |
-|-------------------------------|--------------------------------------------------------------------------------------------------------|:-------:|:--------:|
-| feature_set                   | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING")                |   ALL   |    no    |
-| aws_service_access_principals | A list of AWS service principal names for which you want to enable integration with your organization. |   []    |    no    |
-| organization                  | The tree of organizational units and accounts to construct. Defaults to an empty tree.                 |   []    |    no    |
-| enabled_policy_types          | A list organizations policy types to enable in the Organization Root                                   |   []    |    no    |
+| Name                          | Description                                                                                                                           | Default | Required |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|:-------:|:--------:|
+| feature_set                   | The feature set to enable for the organization (one of "ALL" or "CONSOLIDATED_BILLING")                                               |   ALL   |    no    |
+| aws_service_access_principals | A list of AWS service principal names for which you want to enable integration with your organization.                                |   []    |    no    |
+| organization                  | The tree of organizational units and accounts to construct. Defaults to an empty tree.                                                |   []    |    no    |
+| enabled_policy_types          | The list of Organizations policy types to enable in the Organization Root. The organization must have `feature_set` set to `\"ALL\"`. |   []    |    no    |
 
 ### Outputs
 
-| Name                 | Description                                       |
-|----------------------|---------------------------------------------------|
-| organization_arn     | The ARN of the resulting organization             |
-| organizational_units | Details of the resulting organizational units     |
-| accounts             | Details of the resulting accounts                 |
+| Name                 | Description                                   |
+|----------------------|-----------------------------------------------|
+| organization_arn     | The ARN of the resulting organization         |
+| organizational_units | Details of the resulting organizational units |
+| accounts             | Details of the resulting accounts             |
 
 ### Compatibility
 
