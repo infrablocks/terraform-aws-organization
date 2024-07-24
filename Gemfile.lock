@@ -1643,7 +1643,7 @@ GEM
     public_suffix (6.0.1)
     racc (1.8.0)
     rainbow (3.1.1)
-    rake (13.1.0)
+    rake (13.2.1)
     rake_circle_ci (0.11.0)
       colored2 (~> 3.1)
       excon (~> 0.72)
