@@ -1683,7 +1683,7 @@ GEM
     immutable-struct (2.4.1)
     ipaddress (0.8.3)
     jmespath (1.6.2)
-    json (2.10.1)
+    json (2.10.2)
     language_server-protocol (3.17.0.4)
     lino (3.1.0)
       hamster (~> 3.0)
