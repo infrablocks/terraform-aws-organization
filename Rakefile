@@ -147,7 +147,7 @@ RakeCircleCI.define_project_tasks(
   t.environment_variables = {
     ENCRYPTION_PASSPHRASE:
       File.read('config/secrets/ci/encryption.passphrase')
-          .chomp,
+      .chomp,
     CIRCLECI_API_KEY:
       YAML.load_file(
         'config/secrets/circle_ci/config.yaml'
