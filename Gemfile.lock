@@ -1837,7 +1837,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
-    uri (0.13.2)
+    uri (0.13.3)
     vault (0.18.1)
       aws-sigv4
 
