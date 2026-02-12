@@ -6,7 +6,7 @@ orbs:
 
 defaults: &defaults
   docker:
-    - image: ruby:3.1.1
+    - image: ruby:3.4.4
 
 slack_context: &slack_context
   context:
