@@ -1733,7 +1733,7 @@ GEM
     io-console (0.8.2)
     ipaddress (0.8.3)
     jmespath (1.6.2)
-    json (2.20.0)
+    json (2.21.2)
     language_server-protocol (3.17.0.5)
     lino (3.1.0)
       hamster (~> 3.0)
