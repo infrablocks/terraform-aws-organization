@@ -1711,7 +1711,8 @@ GEM
     evalhook (0.6.0)
       partialruby (~> 0.3)
       sexp_processor (~> 4.0)
-    excon (0.111.0)
+    excon (1.5.0)
+      logger
     faraday (2.14.3)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -1764,9 +1765,9 @@ GEM
     racc (1.8.1)
     rainbow (3.1.1)
     rake (13.4.2)
-    rake_circle_ci (0.13.0)
+    rake_circle_ci (0.14.0.pre.3)
       colored2 (~> 3.1)
-      excon (~> 0.72)
+      excon (>= 0.72, < 2.0)
       rake_factory (~> 0.33)
       sshkey (~> 2.0)
     rake_dependencies (3.13.0)
